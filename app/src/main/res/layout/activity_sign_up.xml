@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#66c066"
+    android:backgroundTintMode="multiply">
+
+
+    <EditText
+        android:id="@+id/ETEmailReg"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Email"
+        android:backgroundTint="#D1B700"/>
+
+    <EditText
+        android:id="@+id/ETpasswordReg"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#D1B700"
+        android:hint="Password"
+        android:inputType="textPassword" />
+    <EditText
+        android:id="@+id/ETCpasswordReg"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword" />
+    <Button
+        android:id="@+id/BTNRegister"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background= "@drawable/buttonstyle"
+        android:text="Register"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="#111"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Sign Up"
+        android:textColor="#111"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:gravity="center" >
+
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="already a member?"
+            android:textColor="#111"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/TVsignin"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:text="Sign In."
+            android:textColor="#111"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:gravity="center" />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

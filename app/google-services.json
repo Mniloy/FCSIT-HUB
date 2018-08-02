@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "660191362383",
+    "firebase_url": "https://fcsit-hub.firebaseio.com",
+    "project_id": "fcsit-hub",
+    "storage_bucket": "fcsit-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660191362383:android:294aada61fc4bdd0",
+        "android_client_info": {
+          "package_name": "my.unimas.a54440siswa.fcsithub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "660191362383-elr9gbu52milaj4b07be5stl1gsei0du.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "my.unimas.a54440siswa.fcsithub",
+            "certificate_hash": "3e3f6ef0c231ff7989f9d8edaad7798b31faeb4c"
+          }
+        },
+        {
+          "client_id": "660191362383-ku0gd0p2d1dt4e074dns6ihgb8trbj9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcmaT84o3zrA-UGrKGMmUcqTX6d6sQRDM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "660191362383-ku0gd0p2d1dt4e074dns6ihgb8trbj9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

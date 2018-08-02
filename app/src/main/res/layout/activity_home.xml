@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#66c066"
+        android:backgroundTintMode="multiply">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_margin="5dp"
+            android:background="#ffffff"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/attachment"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/radio_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="News"
+                android:textStyle="bold"
+                android:textSize="15dp" />
+            <RadioButton android:id="@+id/radio_announcement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Announcement"
+                android:textStyle="bold"
+                android:textSize="15dp" />
+            <RadioButton android:id="@+id/radio_media"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Media"
+                android:textSize="15dp" />
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/BTNpost"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="end"
+            android:background= "@drawable/buttonstyle"
+            android:text="Post"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#111" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <GridLayout
+            android:id="@+id/favorites_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:rowCount="3"
+            android:columnCount="3">
+            <Button
+                android:id="@+id/BTNnews"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="NEWS"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#111"/>
+            <Button
+                android:id="@+id/BTNdirectory"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="DIRECTORY"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#111"/>
+
+            <Button
+                android:id="@+id/BTNfacilities"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="FACILLTIES"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#111"/>
+
+            <Button
+                android:id="@+id/BTNannouncement"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="Announcement"
+                android:textStyle="bold"
+                android:textSize="12dp"
+                android:textColor="#111"/>
+            <Button
+                android:id="@+id/BTNmessage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="Message"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#111"/>
+            <Button
+                android:id="@+id/BTNmedia"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="MEDIA"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#111"/>
+            <Button
+                android:id="@+id/BTNcontacts"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="CONTACTS"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#111"/>
+            <Button
+                android:id="@+id/BTNeleap"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:background= "@drawable/buttonstyle"
+                android:text="ELEAP"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#111"/>
+
+        </GridLayout>
+
+    </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
