@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -73,8 +73,8 @@ public class HomeActivity extends AppCompatActivity {
         BTNDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent facilities = new Intent (HomeActivity.this, Directory.class);
-                startActivity(facilities);
+                Intent directory = new Intent (HomeActivity.this, Directory.class);
+                startActivity(directory);
             }
         });
 
