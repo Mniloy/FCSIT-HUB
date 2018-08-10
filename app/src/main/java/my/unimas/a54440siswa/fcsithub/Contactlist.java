@@ -81,11 +81,11 @@ public class Contactlist extends AppCompatActivity {
 
 
         lstContact = new ArrayList<>();
-        lstContact.add(new Contact("The Vegitarian","ver@g","087382973894"));
-        lstContact.add(new Contact("The Vegitarian","ver@g","087382973894"));
-        lstContact.add(new Contact("The Vegitarian","ver@g","087382973894"));
-        lstContact.add(new Contact("The Vegitarian","ver@g","087382973894"));
-        lstContact.add(new Contact("The Vegitarian","ver@g","087382973894"));
+        lstContact.add(new Contact("Niloy","niloy@gmail.com","01921234072"));
+        lstContact.add(new Contact("Ferdous","ferdous@gmail.com","0192322890"));
+        lstContact.add(new Contact("Dipu","dipu@gmail.com","01721212098"));
+        lstContact.add(new Contact("Mehedi","mehedi@gmail.com","01123456789"));
+        lstContact.add(new Contact("Dean","dean@gmail.com","01123456078"));
 
 
         RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview_id);
