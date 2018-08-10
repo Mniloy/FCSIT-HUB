@@ -1,6 +1,7 @@
 package my.unimas.a54440siswa.fcsithub;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button BTNFacilities, BTNDirectory;
+    Button BTNFacilities, BTNDirectory, BTNContact;
     ImageView IVLogout;
 
     FirebaseAuth mAuth;
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
         BTNFacilities = (Button) findViewById(R.id.BTNfacilities);
         BTNDirectory = (Button) findViewById(R.id.BTNdirectory);
+        BTNContact = (Button) findViewById(R.id.BTNContact);
         IVLogout = (ImageView) findViewById(R.id.IVLogout);
 
 
@@ -75,6 +77,14 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent directory = new Intent (HomeActivity.this, Directory.class);
                 startActivity(directory);
+            }
+        });
+
+        BTNContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent contacts = new Intent(HomeActivity.this, Contactlist.class);
+                startActivity(contacts);
             }
         });
 

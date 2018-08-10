@@ -111,7 +111,7 @@
                 android:textColor="#111"/>
 
             <Button
-                android:id="@+id/BTNannouncement"
+                android:id="@+id/BTNAnnouncement"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
@@ -121,7 +121,7 @@
                 android:textSize="12dp"
                 android:textColor="#111"/>
             <Button
-                android:id="@+id/BTNmessage"
+                android:id="@+id/BTNMessage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
@@ -131,7 +131,7 @@
                 android:textSize="16dp"
                 android:textColor="#111"/>
             <Button
-                android:id="@+id/BTNmedia"
+                android:id="@+id/BTNMedia"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
@@ -141,7 +141,7 @@
                 android:textSize="16dp"
                 android:textColor="#111"/>
             <Button
-                android:id="@+id/BTNcontacts"
+                android:id="@+id/BTNContact"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
@@ -151,7 +151,7 @@
                 android:textSize="16dp"
                 android:textColor="#111"/>
             <Button
-                android:id="@+id/BTNeleap"
+                android:id="@+id/BTNEleap"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
