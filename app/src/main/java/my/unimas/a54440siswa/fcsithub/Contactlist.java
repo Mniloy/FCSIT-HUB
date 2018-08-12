@@ -29,7 +29,7 @@ public class Contactlist extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseUser user;
-    DatabaseReference userRef;
+    DatabaseReference contactRef;
     ContactRecyclerViewAdapter contactAdapter;
     List<Contact> lstContact ;
 
@@ -96,7 +96,7 @@ public class Contactlist extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        userRef = rootRef.child("Users");
+        contactRef = rootRef.child("Contact");
         /*----------------------------------------------------------------------------------------*/
 
         /*-------------------------------- Course List Fetch -------------------------------------*/
@@ -104,23 +104,23 @@ public class Contactlist extends AppCompatActivity {
 
         lstContact = new ArrayList<>();
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        contactRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String contactid[] = new String[10];
-                String name[] = new String[10];
-                String email[] = new String[10];
-                String number[] = new String[10];
+                String contactid[] = new String[20];
+                String name[] = new String[20];
+                String email[] = new String[20];
+                String number[] = new String[20];
 
                 lstContact.clear();
                 if (dataSnapshot.exists()) {
 
                     int i = 1;
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Contact").getChildren()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         contactid[i]= dataSnapshot1.getKey();
-                        name[i]=dataSnapshot.child("Contact").child(name[i]).getValue(String.class);
-                        email[i]=dataSnapshot.child("Contact").child(email[i]).getValue(String.class);
-                        number[i]=dataSnapshot.child("Contact").child(number[i]).getValue(String.class);
+                        name[i]=dataSnapshot.child(contactid[i]).child("Name").getValue(String.class);
+                        email[i]=dataSnapshot.child(contactid[i]).child("Email").getValue(String.class);
+                        number[i]=dataSnapshot.child(contactid[i]).child("Number").getValue(String.class);
                         lstContact.add(new Contact(name[i],email[i],number[i]));
                         i++;
                     }
