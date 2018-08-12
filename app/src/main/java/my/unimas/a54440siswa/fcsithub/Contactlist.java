@@ -1,26 +1,38 @@
 package my.unimas.a54440siswa.fcsithub;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Contactlist extends AppCompatActivity {
+    String userID;
     ImageView IVLogout;
     ImageView IVback;
 
-
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
+    FirebaseUser user;
+    DatabaseReference userRef;
+    ContactRecyclerViewAdapter contactAdapter;
+    List<Contact> lstContact ;
+
 
     @Override
     protected void onStart() {
@@ -41,9 +53,10 @@ public class Contactlist extends AppCompatActivity {
         setContentView(R.layout.activity_contactlist);
         mAuth = FirebaseAuth.getInstance();
 
-        List<Contact> lstContact ;
+
         IVback = (ImageView) findViewById(R.id.IVback);
         IVLogout = (ImageView) findViewById(R.id.IVLogout);
+        final RecyclerView RVContact = findViewById(R.id.recyclerview_id);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -79,19 +92,54 @@ public class Contactlist extends AppCompatActivity {
             }
         });
 
+        /* ------------------------------ Firebase Elements --------------------------------------*/
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        userRef = rootRef.child("Users");
+        /*----------------------------------------------------------------------------------------*/
+
+        /*-------------------------------- Course List Fetch -------------------------------------*/
+
 
         lstContact = new ArrayList<>();
-        lstContact.add(new Contact("Niloy","niloy@gmail.com","01921234072"));
-        lstContact.add(new Contact("Ferdous","ferdous@gmail.com","0192322890"));
-        lstContact.add(new Contact("Dipu","dipu@gmail.com","01721212098"));
-        lstContact.add(new Contact("Mehedi","mehedi@gmail.com","01123456789"));
-        lstContact.add(new Contact("Dean","dean@gmail.com","01123456078"));
 
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String contactid[] = new String[10];
+                String name[] = new String[10];
+                String email[] = new String[10];
+                String number[] = new String[10];
 
-        RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview_id);
-        ContactRecyclerViewAdapter myAdapter = new ContactRecyclerViewAdapter(this,lstContact);
-        myrv.setLayoutManager(new LinearLayoutManager(this));
-        myrv.setAdapter(myAdapter);
+                lstContact.clear();
+                if (dataSnapshot.exists()) {
 
-        }
+                    int i = 1;
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Contact").getChildren()) {
+                        contactid[i]= dataSnapshot1.getKey();
+                        name[i]=dataSnapshot.child("Contact").child(name[i]).getValue(String.class);
+                        email[i]=dataSnapshot.child("Contact").child(email[i]).getValue(String.class);
+                        number[i]=dataSnapshot.child("Contact").child(number[i]).getValue(String.class);
+                        lstContact.add(new Contact(name[i],email[i],number[i]));
+                        i++;
+                    }
+                }else{
+                    RVContact.setVisibility(View.GONE);
+                }
+                contactAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Hello", "Failed to read value.", error.toException());
+            }
+        });
+
+        contactAdapter = new ContactRecyclerViewAdapter(this,lstContact);
+        RVContact.setLayoutManager(new LinearLayoutManager(this));
+        RVContact.setAdapter(contactAdapter);
+
+       }
 }
