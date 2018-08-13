@@ -22,7 +22,9 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".Facilities" />
         <activity android:name=".Directory" />
-        <activity android:name=".Contactlist"></activity>
+        <activity android:name=".Contactlist" />
+        <activity android:name=".Searchview" />
+        <activity android:name=".Eleap"></activity>
     </application>
 
 </manifest>

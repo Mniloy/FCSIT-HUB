@@ -6,11 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,10 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contactlist extends AppCompatActivity {
+
     String UserId;
     ImageView IVLogout;
     ImageView IVback;
     TextView UserName;
+    Toolbar toolbar;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -54,10 +57,16 @@ public class Contactlist extends AppCompatActivity {
         setContentView(R.layout.activity_contactlist);
         mAuth = FirebaseAuth.getInstance();
 
+        toolbar= findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
 
         IVback = (ImageView) findViewById(R.id.IVback);
         IVLogout = (ImageView) findViewById(R.id.IVLogout);
         UserName= findViewById(R.id.username);
+
+
         final RecyclerView RVContact = findViewById(R.id.recyclerview_id);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -146,5 +155,15 @@ public class Contactlist extends AppCompatActivity {
         RVContact.setLayoutManager(new LinearLayoutManager(this));
         RVContact.setAdapter(contactAdapter);
 
-       }
+
+    }
+
+    public boolean onCreateOptionMenu (Menu menu){
+        getMenuInflater().inflate(R.menu.searchview, menu);
+        return true;
+    }
+
+
+
+
 }

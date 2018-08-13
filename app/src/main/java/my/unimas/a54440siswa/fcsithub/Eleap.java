@@ -1,12 +1,9 @@
 package my.unimas.a54440siswa.fcsithub;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,20 +18,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
-public class HomeActivity extends AppCompatActivity {
-
-    Button BTNFacilities, BTNDirectory, BTNContact, BTNEleap;
+public class Eleap extends AppCompatActivity {
     ImageView IVLogout;
+    ImageView IVback;
     String UserId;
     TextView UserName;
 
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthListener;
-
-
-
 
     @Override
     protected void onStart() {
@@ -52,15 +44,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_directory);
         mAuth = FirebaseAuth.getInstance();
 
-        BTNFacilities = (Button) findViewById(R.id.BTNfacilities);
-        BTNDirectory = (Button) findViewById(R.id.BTNdirectory);
-        BTNContact = (Button) findViewById(R.id.BTNContact);
-        BTNEleap = (Button) findViewById(R.id.BTNEleap);
+        IVback = (ImageView) findViewById(R.id.IVback);
         IVLogout = (ImageView) findViewById(R.id.IVLogout);
-
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
@@ -82,11 +70,30 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(HomeActivity.this, SignIn.class));
+                    startActivity(new Intent(Eleap.this, HomeActivity.class));
+                }
+            }
+        };
+
+        IVback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent homeactivity = new Intent (Eleap.this, HomeActivity.class);
+                startActivity(homeactivity);
+            }
+        });
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    startActivity(new Intent(Eleap.this, SignIn.class));
                 }
             }
         };
@@ -95,42 +102,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-
-            }
-        });
-
-        BTNFacilities.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent facilities = new Intent (HomeActivity.this, Facilities.class);
-                startActivity(facilities);
-            }
-        });
-
-        BTNDirectory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent directory = new Intent (HomeActivity.this, Directory.class);
-                startActivity(directory);
-            }
-        });
-
-        BTNContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent contacts = new Intent(HomeActivity.this, Contactlist.class);
-                startActivity(contacts);
-            }
-        });
-
-        BTNEleap.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://eleap.unimas.my/"));
-                startActivity(browserIntent);
             }
         });
 
     }
+
 }
+

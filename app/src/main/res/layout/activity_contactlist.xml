@@ -8,6 +8,7 @@
         android:background="#66c066"
         android:backgroundTintMode="multiply">
     <include layout="@layout/activity_actionbar" />
+    <include layout="@layout/toolbar_searchview" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_id"
