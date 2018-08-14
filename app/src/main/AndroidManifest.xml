@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="my.unimas.a54440siswa.fcsithub">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,8 +25,8 @@
         <activity android:name=".Facilities" />
         <activity android:name=".Directory" />
         <activity android:name=".Contactlist" />
-        <activity android:name=".Searchview" />
-        <activity android:name=".Eleap"></activity>
+        <activity android:name=".Eleap" />
+        <activity android:name=".NewsList"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package my.unimas.a54440siswa.fcsithub;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,14 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,14 +31,26 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button BTNFacilities, BTNDirectory, BTNContact, BTNEleap;
+    Button BTNFacilities, BTNDirectory, BTNContact, BTNEleap, BTNMessage, BTNPost, BTNNews;
+
     ImageView IVLogout;
     String UserId;
+    String postusername;
+    String password;
+    String chatWith;
     TextView UserName;
+    LinearLayout layout;
+    EditText ETpost;
+    RadioButton Rnews, Rannouncement, Rmedia;
+
+
+
 
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthListener;
+
+
 
 
 
@@ -59,12 +78,66 @@ public class HomeActivity extends AppCompatActivity {
         BTNDirectory = (Button) findViewById(R.id.BTNdirectory);
         BTNContact = (Button) findViewById(R.id.BTNContact);
         BTNEleap = (Button) findViewById(R.id.BTNEleap);
+        BTNMessage=(Button) findViewById(R.id.BTNMessage);
         IVLogout = (ImageView) findViewById(R.id.IVLogout);
+        ETpost= findViewById(R.id.ETpost);
+        BTNPost = findViewById(R.id.BTNpost);
+        BTNNews = findViewById(R.id.BTNnews);
+        Rnews = findViewById(R.id.radio_news);
+        Rannouncement = findViewById(R.id.radio_announcement);
+        Rmedia = findViewById(R.id.radio_media);
+
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
+        postusername =user.getDisplayName();
         UserName =findViewById(R.id.username);
+
+
+        BTNPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ETpost.getText().toString().length() == 0) {
+                    ETpost.setError("Type Something");
+                } else if (ETpost.getText().toString().length() >= 300) {
+                    ETpost.setError("Note should be less than 300 characters");
+                } else {
+                    if (Rnews.isChecked()){
+
+                        String post = ETpost.getText().toString().trim();
+                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("News").push();
+                        postRef.child("PostUserId").setValue(UserId);
+                        postRef.child("PostUserName").setValue(postusername);
+                        postRef.child("Post").setValue(post);
+                        //  postRef.child("Date").setValue(getCurrentDate());
+                        Toast.makeText(HomeActivity.this, "Note Saved", Toast.LENGTH_LONG).show();
+                        ETpost.setText("");
+
+
+                    }else if (Rannouncement.isChecked()){
+
+                        String post = ETpost.getText().toString().trim();
+                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Announcement").push();
+                        postRef.child("PostUserId").setValue(UserId);
+                        postRef.child("PostUserName").setValue(postusername);
+                        postRef.child("Post").setValue(post);
+                        //  postRef.child("Date").setValue(getCurrentDate());
+                        Toast.makeText(HomeActivity.this, "Note Saved", Toast.LENGTH_LONG).show();
+                        ETpost.setText("");
+                    }else{
+                        Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
+                        ETpost.setText("");
+
+                    }
+
+
+
+                }
+            }
+        });
+
+
 
         rootRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -131,6 +204,16 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
+
+        BTNNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent news = new Intent(HomeActivity.this, NewsList.class);
+                startActivity(news);
+            }
+        });
+
+
 
     }
 }
