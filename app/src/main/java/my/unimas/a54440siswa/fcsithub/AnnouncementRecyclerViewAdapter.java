@@ -5,19 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 
-public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.MyViewHolder> {
+public class AnnouncementRecyclerViewAdapter extends RecyclerView.Adapter<AnnouncementRecyclerViewAdapter.MyViewHolder> {
 
     private Context mContext ;
-    private List<News> mData ;
+    private List<Announcement> mData ;
 
 
-    public NewsRecyclerViewAdapter(Context mContext, List<News> mData) {
+    public AnnouncementRecyclerViewAdapter(Context mContext, List<Announcement> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -27,7 +26,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.news,parent,false);
+        view = mInflater.inflate(R.layout.announcement,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -39,7 +38,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         holder.TVPostTime.setText(mData.get(position).getPostTime());
         holder.TVPostDate.setText(mData.get(position).getPostDate());
 
-
     }
 
     @Override
@@ -49,17 +47,15 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TVPost, TVUserName,TVPostTime, TVPostDate;
-        ImageView IVDelete;
+        TextView TVPost, TVUserName, TVPostTime, TVPostDate;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            TVPost = (TextView) itemView.findViewById(R.id.TVNPost) ;
-            TVUserName = (TextView) itemView.findViewById(R.id.TVNUserName) ;
-            TVPostTime = (TextView) itemView.findViewById(R.id.TVNPostTime) ;
-            TVPostDate = (TextView) itemView.findViewById(R.id.TVNPostDate) ;
-            IVDelete = itemView.findViewById(R.id.IVDelete);
+            TVPost = (TextView) itemView.findViewById(R.id.TVAPost) ;
+            TVUserName = (TextView) itemView.findViewById(R.id.TVAUserName) ;
+            TVPostTime = (TextView) itemView.findViewById(R.id.TVAPostTime) ;
+            TVPostDate = (TextView) itemView.findViewById(R.id.TVAPostDate) ;
 
 
 

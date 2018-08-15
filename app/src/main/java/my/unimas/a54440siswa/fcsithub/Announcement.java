@@ -1,16 +1,16 @@
 
 package my.unimas.a54440siswa.fcsithub;
-public class News {
+public class Announcement {
 
     private String Post;
     private String PostUserName ;
     private String PostTime ;
     private String PostDate ;
 
-    public News() {
+    public Announcement() {
     }
 
-    public News(String post, String postusername, String posttime, String postdate) {
+    public Announcement(String post, String postusername, String posttime, String postdate) {
         Post = post;
         PostUserName = postusername;
         PostTime = posttime;
@@ -34,9 +34,7 @@ public class News {
         return PostDate;
     }
 
-    public void setName(String post) {
-        Post = post;
-    }
+    public void setName(String post) { Post = post; }
 
     public void setPostUserName(String postusername) {
         PostUserName = postusername;
@@ -46,4 +44,4 @@ public class News {
 
     public void setPostDate(String postdate) { PostDate = postdate; }
 
-  }
+}

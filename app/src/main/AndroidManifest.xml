@@ -26,7 +26,8 @@
         <activity android:name=".Directory" />
         <activity android:name=".Contactlist" />
         <activity android:name=".Eleap" />
-        <activity android:name=".NewsList"></activity>
+        <activity android:name=".NewsList"/>
+        <activity android:name=".AnnouncementList" />
     </application>
 
 </manifest>

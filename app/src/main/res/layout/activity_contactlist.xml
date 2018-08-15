@@ -8,13 +8,21 @@
         android:background="#66c066"
         android:backgroundTintMode="multiply">
     <include layout="@layout/activity_actionbar" />
-    <include layout="@layout/toolbar_searchview" />
+
+    <EditText
+        android:id="@+id/ETSearch"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ffffff"/>
+    <Button
+        android:id="@+id/BTNsearch"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@mipmap/ic_search"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_id"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>

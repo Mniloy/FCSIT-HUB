@@ -10,8 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,21 +23,21 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contactlist extends AppCompatActivity {
+public class AnnouncementList extends AppCompatActivity {
 
     String UserId;
-    Button BTNSearch;
     ImageView IVLogout;
     ImageView IVback;
     TextView UserName;
+    TextView PostTime;
+    TextView PostDate;
     Toolbar toolbar;
-    EditText ETSearch;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseUser user;
-    ContactRecyclerViewAdapter contactAdapter;
-    List<Contact> lstContact ;
+    AnnouncementRecyclerViewAdapter announcementAdapter;
+    List<Announcement> lstAnnouncement ;
 
 
     @Override
@@ -58,28 +56,25 @@ public class Contactlist extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contactlist);
+        setContentView(R.layout.announcementlist);
         mAuth = FirebaseAuth.getInstance();
 
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-
         IVback = (ImageView) findViewById(R.id.IVback);
         IVLogout = (ImageView) findViewById(R.id.IVLogout);
         UserName= findViewById(R.id.username);
-        ETSearch=findViewById(R.id.ETSearch);
-        BTNSearch= findViewById(R.id.BTNsearch);
 
 
-        final RecyclerView RVContact = findViewById(R.id.recyclerview_id);
+        final RecyclerView RVAnnouncement = findViewById(R.id.recyclerview_announcement);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(Contactlist.this, HomeActivity.class));
+                    startActivity(new Intent(AnnouncementList.this, HomeActivity.class));
                 }
             }
         };
@@ -87,7 +82,7 @@ public class Contactlist extends AppCompatActivity {
         IVback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent homeactivity = new Intent (Contactlist.this, HomeActivity.class);
+                Intent homeactivity = new Intent (AnnouncementList.this, HomeActivity.class);
                 startActivity(homeactivity);
             }
         });
@@ -97,7 +92,7 @@ public class Contactlist extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(Contactlist.this, SignIn.class));
+                    startActivity(new Intent(AnnouncementList.this, SignIn.class));
                 }
             }
         };
@@ -112,7 +107,7 @@ public class Contactlist extends AppCompatActivity {
         /* ------------------------------ Firebase Elements --------------------------------------*/
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference announcementRef = FirebaseDatabase.getInstance().getReference();
 
 
         /*----------------------------------------------------------------------------------------*/
@@ -120,37 +115,37 @@ public class Contactlist extends AppCompatActivity {
         /*-------------------------------- Course List Fetch -------------------------------------*/
 
 
-        lstContact = new ArrayList<>();
+        lstAnnouncement = new ArrayList<>();
 
-        rootRef.addValueEventListener(new ValueEventListener() {
+        announcementRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
                 UserName.setText(userName);
-                String contactid[] = new String[20];
-                String name[] = new String[20];
-                String email[] = new String[20];
-                String number[] = new String[20];
+                String announcementid[] = new String[20];
+                String postusername[] = new String[20];
+                String post[] = new String[20];
+                String posttime[] = new String[20];
+                String postdate[] = new String[20];
 
-                lstContact.clear();
+                lstAnnouncement.clear();
                 if (dataSnapshot.exists()) {
 
                     int i = 1;
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Contact").getChildren()) {
-                        contactid[i]= dataSnapshot1.getKey();
-                        name[i]=dataSnapshot.child("Contact").child(contactid[i]).child("Name").getValue(String.class);
-                        email[i]=dataSnapshot.child("Contact").child(contactid[i]).child("Email").getValue(String.class);
-                        number[i]=dataSnapshot.child("Contact").child(contactid[i]).child("Number").getValue(String.class);
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Announcement").getChildren()) {
+                        announcementid[i]= dataSnapshot1.getKey();
+                        postusername[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("PostUserName").getValue(String.class);
+                        post[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("Post").getValue(String.class);
+                        posttime[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("PostTime").getValue(String.class);
+                        postdate[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("PostDate").getValue(String.class);
 
-                        if(name[i].contains(ETSearch.getText().toString().trim())) {
-                            lstContact.add(new Contact(name[i], email[i], number[i]));
-                        }
+                        lstAnnouncement.add(new Announcement(post[i],postusername[i],posttime[i],postdate[i]));
                         i++;
                     }
                 }else{
-                    RVContact.setVisibility(View.GONE);
+                    RVAnnouncement.setVisibility(View.GONE);
                 }
-                contactAdapter.notifyDataSetChanged();
+                announcementAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -160,9 +155,9 @@ public class Contactlist extends AppCompatActivity {
             }
         });
 
-        contactAdapter = new ContactRecyclerViewAdapter(this,lstContact);
-        RVContact.setLayoutManager(new LinearLayoutManager(this));
-        RVContact.setAdapter(contactAdapter);
+        announcementAdapter = new AnnouncementRecyclerViewAdapter(this,lstAnnouncement);
+        RVAnnouncement.setLayoutManager(new LinearLayoutManager(this));
+        RVAnnouncement.setAdapter(announcementAdapter);
 
 
     }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,22 +29,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button BTNFacilities, BTNDirectory, BTNContact, BTNEleap, BTNMessage, BTNPost, BTNNews;
+    Button BTNFacilities, BTNDirectory, BTNContact, BTNEleap, BTNMessage, BTNPost, BTNNews, BTNAnnouncement;
+    ImageButton IVDelete;
 
     ImageView IVLogout;
     String UserId;
     String postusername;
+    String posttime;
+    String postdate;
     String password;
-    String chatWith;
     TextView UserName;
     LinearLayout layout;
     EditText ETpost;
     RadioButton Rnews, Rannouncement, Rmedia;
-
-
 
 
     FirebaseAuth mAuth;
@@ -83,9 +88,11 @@ public class HomeActivity extends AppCompatActivity {
         ETpost= findViewById(R.id.ETpost);
         BTNPost = findViewById(R.id.BTNpost);
         BTNNews = findViewById(R.id.BTNnews);
+        BTNAnnouncement=(Button) findViewById(R.id.BTNAnnouncement);
         Rnews = findViewById(R.id.radio_news);
         Rannouncement = findViewById(R.id.radio_announcement);
         Rmedia = findViewById(R.id.radio_media);
+        IVDelete=findViewById(R.id.IVDelete);
 
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -110,8 +117,9 @@ public class HomeActivity extends AppCompatActivity {
                         postRef.child("PostUserId").setValue(UserId);
                         postRef.child("PostUserName").setValue(postusername);
                         postRef.child("Post").setValue(post);
-                        //  postRef.child("Date").setValue(getCurrentDate());
-                        Toast.makeText(HomeActivity.this, "Note Saved", Toast.LENGTH_LONG).show();
+                        postRef.child("PostTime").setValue(getCurrentTime());
+                        postRef.child("PostDate").setValue(getCurrentDate());
+                        Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
                         ETpost.setText("");
 
 
@@ -122,8 +130,9 @@ public class HomeActivity extends AppCompatActivity {
                         postRef.child("PostUserId").setValue(UserId);
                         postRef.child("PostUserName").setValue(postusername);
                         postRef.child("Post").setValue(post);
-                        //  postRef.child("Date").setValue(getCurrentDate());
-                        Toast.makeText(HomeActivity.this, "Note Saved", Toast.LENGTH_LONG).show();
+                        postRef.child("PostTime").setValue(getCurrentTime());
+                        postRef.child("PostDate").setValue(getCurrentDate());
+                        Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
                         ETpost.setText("");
                     }else{
                         Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
@@ -212,8 +221,32 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(news);
             }
         });
+        BTNAnnouncement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent announcement = new Intent(HomeActivity.this, AnnouncementList.class);
+                startActivity(announcement);
+            }
+        });
 
 
 
     }
+
+    public String getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    public String getCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+
+
+
+
 }

@@ -29,6 +29,8 @@ public class NewsList extends AppCompatActivity {
     ImageView IVLogout;
     ImageView IVback;
     TextView UserName;
+    TextView PostTime;
+    TextView PostDate;
     Toolbar toolbar;
 
     FirebaseAuth mAuth;
@@ -124,6 +126,8 @@ public class NewsList extends AppCompatActivity {
                 String newsid[] = new String[20];
                 String postusername[] = new String[20];
                 String post[] = new String[20];
+                String posttime[] = new String[20];
+                String postdate[] = new String[20];
 
                 lstNews.clear();
                 if (dataSnapshot.exists()) {
@@ -133,8 +137,10 @@ public class NewsList extends AppCompatActivity {
                         newsid[i]= dataSnapshot1.getKey();
                         postusername[i]=dataSnapshot.child("News").child(newsid[i]).child("PostUserName").getValue(String.class);
                         post[i]=dataSnapshot.child("News").child(newsid[i]).child("Post").getValue(String.class);
+                        posttime[i]=dataSnapshot.child("News").child(newsid[i]).child("PostTime").getValue(String.class);
+                        postdate[i]=dataSnapshot.child("News").child(newsid[i]).child("PostDate").getValue(String.class);
 
-                        lstNews.add(new News(post[i],postusername[i]));
+                        lstNews.add(new News(post[i],postusername[i],posttime[i],postdate[i]));
                         i++;
                     }
                 }else{
