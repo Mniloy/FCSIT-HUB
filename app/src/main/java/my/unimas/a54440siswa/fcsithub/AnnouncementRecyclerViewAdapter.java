@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -25,6 +26,7 @@ public class AnnouncementRecyclerViewAdapter extends RecyclerView.Adapter<Announ
     FirebaseAuth mAuth;
     FirebaseUser user;
     String UserID;
+
 
 
     public AnnouncementRecyclerViewAdapter(Context mContext, List<Announcement> mData) {

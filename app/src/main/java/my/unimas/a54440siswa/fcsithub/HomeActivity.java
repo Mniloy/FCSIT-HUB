@@ -192,8 +192,10 @@ public class HomeActivity extends AppCompatActivity {
         BTNDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent directory = new Intent (HomeActivity.this, Directory.class);
-                startActivity(directory);
+                Intent browserIntent = new Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://www.unimas.my/student/unimas-map"));
+                startActivity(browserIntent);
             }
         });
 
