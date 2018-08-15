@@ -127,6 +127,7 @@ public class AnnouncementList extends AppCompatActivity {
                 String post[] = new String[20];
                 String posttime[] = new String[20];
                 String postdate[] = new String[20];
+                String userid[] = new String[30];
 
                 lstAnnouncement.clear();
                 if (dataSnapshot.exists()) {
@@ -138,8 +139,9 @@ public class AnnouncementList extends AppCompatActivity {
                         post[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("Post").getValue(String.class);
                         posttime[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("PostTime").getValue(String.class);
                         postdate[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("PostDate").getValue(String.class);
+                        userid[i]=dataSnapshot.child("Announcement").child(announcementid[i]).child("PostUserId").getValue(String.class);
 
-                        lstAnnouncement.add(new Announcement(post[i],postusername[i],posttime[i],postdate[i]));
+                        lstAnnouncement.add(new Announcement(post[i],postusername[i],posttime[i],postdate[i], announcementid[i], userid[i]));
                         i++;
                     }
                 }else{

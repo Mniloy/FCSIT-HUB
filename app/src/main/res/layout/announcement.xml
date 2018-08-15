@@ -16,6 +16,27 @@
         android:background="#32ab32"
         android:backgroundTintMode="multiply">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+
+            <TextView
+                android:id="@+id/TVAError"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="#ffffff"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:id="@+id/IVDelete"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/delete"/>
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/TVAUserName"
             android:textColor="#ffffff"

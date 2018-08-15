@@ -6,15 +6,19 @@ public class Announcement {
     private String PostUserName ;
     private String PostTime ;
     private String PostDate ;
+    private String AnnouncementID ;
+    private String UserID ;
 
     public Announcement() {
     }
 
-    public Announcement(String post, String postusername, String posttime, String postdate) {
+    public Announcement(String post, String postusername, String posttime, String postdate, String announcementid, String userid) {
         Post = post;
         PostUserName = postusername;
         PostTime = posttime;
         PostDate = postdate;
+        AnnouncementID = announcementid;
+        UserID = userid;
     }
 
 
@@ -34,6 +38,14 @@ public class Announcement {
         return PostDate;
     }
 
+    public String getAnnouncementID() {
+        return AnnouncementID;
+    }
+
+    public String getUserID() {
+        return UserID;
+    }
+
     public void setName(String post) { Post = post; }
 
     public void setPostUserName(String postusername) {
@@ -43,5 +55,9 @@ public class Announcement {
     public void setPostTime(String posttime) { PostTime = posttime; }
 
     public void setPostDate(String postdate) { PostDate = postdate; }
+
+    public void setNewsID(String announcementid) { PostDate = announcementid; }
+
+    public void setUserID(String userid) { PostDate = userid; }
 
 }
