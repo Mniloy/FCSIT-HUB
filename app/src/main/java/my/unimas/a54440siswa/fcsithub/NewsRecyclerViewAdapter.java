@@ -7,6 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -15,6 +21,11 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     private Context mContext ;
     private List<News> mData ;
+
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+    String UserID;
+
 
 
     public NewsRecyclerViewAdapter(Context mContext, List<News> mData) {
@@ -32,12 +43,29 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         holder.TVPost.setText(mData.get(position).getPost());
         holder.TVUserName.setText(mData.get(position).getPostUserName());
         holder.TVPostTime.setText(mData.get(position).getPostTime());
         holder.TVPostDate.setText(mData.get(position).getPostDate());
+        holder.IVDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                UserID = user.getUid();
+                if(UserID.equals(mData.get(position).getUserID())){
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                    ref.child("News").child(mData.get(position).getNewsID()).removeValue();
+
+                }else{
+                    Toast.makeText(mContext, "You are not Allowed to Delete this Post", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
 
 
     }
@@ -49,7 +77,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TVPost, TVUserName,TVPostTime, TVPostDate;
+        TextView TVPost, TVUserName,TVPostTime, TVPostDate, TVNError;
         ImageView IVDelete;
 
         public MyViewHolder(View itemView) {
@@ -60,6 +88,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             TVPostTime = (TextView) itemView.findViewById(R.id.TVNPostTime) ;
             TVPostDate = (TextView) itemView.findViewById(R.id.TVNPostDate) ;
             IVDelete = itemView.findViewById(R.id.IVDelete);
+            TVNError = itemView.findViewById(R.id.TVNError);
 
 
 

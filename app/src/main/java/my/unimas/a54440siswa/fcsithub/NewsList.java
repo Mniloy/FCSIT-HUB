@@ -128,6 +128,7 @@ public class NewsList extends AppCompatActivity {
                 String post[] = new String[20];
                 String posttime[] = new String[20];
                 String postdate[] = new String[20];
+                String userid[] = new String[30];
 
                 lstNews.clear();
                 if (dataSnapshot.exists()) {
@@ -139,8 +140,9 @@ public class NewsList extends AppCompatActivity {
                         post[i]=dataSnapshot.child("News").child(newsid[i]).child("Post").getValue(String.class);
                         posttime[i]=dataSnapshot.child("News").child(newsid[i]).child("PostTime").getValue(String.class);
                         postdate[i]=dataSnapshot.child("News").child(newsid[i]).child("PostDate").getValue(String.class);
+                        userid[i]=dataSnapshot.child("News").child(newsid[i]).child("PostUserId").getValue(String.class);
 
-                        lstNews.add(new News(post[i],postusername[i],posttime[i],postdate[i]));
+                        lstNews.add(new News(post[i],postusername[i],posttime[i],postdate[i], newsid[i], userid[i]));
                         i++;
                     }
                 }else{
