@@ -10,11 +10,12 @@
         android:layout_gravity="center">
 
         <ImageView
+            android:id="@+id/IVback"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/back"
+            android:layout_gravity="right"
             android:background="@android:color/transparent"
-            android:id="@+id/IVback" />
+            android:src="@drawable/back" />
 
         <TextView
             android:id="@+id/username"
