@@ -164,10 +164,6 @@ public class AnnouncementList extends AppCompatActivity {
 
     }
 
-    public boolean onCreateOptionMenu (Menu menu){
-        getMenuInflater().inflate(R.menu.searchview, menu);
-        return true;
-    }
 
 
 

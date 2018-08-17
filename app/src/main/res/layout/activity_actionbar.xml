@@ -2,37 +2,62 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="50dp"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="#F10E0E">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/IVback"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:background="@android:color/transparent"
-            android:src="@drawable/back" />
-
         <TextView
             android:id="@+id/username"
-            android:layout_width="220dp"
-            android:layout_height="match_parent"
-            android:text="@string/app_name"
-            android:textSize="12dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textSize="15dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"/>
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/logout"
-            android:id="@+id/IVLogout"
-            android:background="@android:color/transparent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+
+            <ImageView
+                android:id="@+id/IVback"
+                android:layout_margin="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/back" />
+
+            <ImageView
+                android:id="@+id/IVsearch"
+                android:layout_margin="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/search" />
+
+
+            <ImageView
+                android:id="@+id/IVLogout"
+                android:layout_margin="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/logout" />
+
+            <ImageView
+                android:id="@+id/IVProfile"
+                android:layout_margin="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/profile"
+                />
+
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

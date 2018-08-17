@@ -39,11 +39,9 @@ public class HomeActivity extends AppCompatActivity {
     Button BTNFacilities, BTNDirectory, BTNContact, BTNEleap, BTNMessage, BTNPost, BTNNews, BTNAnnouncement;
     ImageButton IVDelete;
 
-    ImageView IVLogout;
+    ImageView IVLogout, IVBack, IVProfile, IVSearch;
     String UserId;
     String postusername;
-    String posttime;
-    String postdate;
     String password;
     TextView UserName;
     LinearLayout layout;
@@ -79,6 +77,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
 
+        IVBack =findViewById(R.id.IVback);
+        IVBack.setVisibility(View.INVISIBLE);
+        IVSearch =findViewById(R.id.IVsearch);
+        IVSearch.setVisibility(View.INVISIBLE);
         BTNFacilities = (Button) findViewById(R.id.BTNfacilities);
         BTNDirectory = (Button) findViewById(R.id.BTNdirectory);
         BTNContact = (Button) findViewById(R.id.BTNContact);
@@ -93,6 +95,7 @@ public class HomeActivity extends AppCompatActivity {
         Rannouncement = findViewById(R.id.radio_announcement);
         Rmedia = findViewById(R.id.radio_media);
         IVDelete=findViewById(R.id.IVDelete);
+        IVProfile= findViewById(R.id.IVProfile);
 
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -186,6 +189,14 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent facilities = new Intent (HomeActivity.this, Facilities.class);
                 startActivity(facilities);
+            }
+        });
+
+        IVProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userprofile = new Intent (HomeActivity.this, Userprofile.class);
+                startActivity(userprofile);
             }
         });
 

@@ -25,20 +25,20 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contactlist extends AppCompatActivity {
+public class Userprofile extends AppCompatActivity {
 
     String UserId;
     ImageView IVLogout,IVSearch, IVProfile;
     ImageView IVback;
-    TextView UserName;
+    TextView UserName, UserPName, UserEmail, UserNumber, UserDesignation, UserProgram;
     Toolbar toolbar;
-    EditText ETSearch;
+
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseUser user;
-    ContactRecyclerViewAdapter contactAdapter;
-    List<Contact> lstContact ;
+
+
 
 
     @Override
@@ -57,45 +57,44 @@ public class Contactlist extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contactlist);
+        setContentView(R.layout.activity_userprofile);
         mAuth = FirebaseAuth.getInstance();
 
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         IVback =  findViewById(R.id.IVback);
-        IVLogout = (ImageView) findViewById(R.id.IVLogout);
+        IVLogout = findViewById(R.id.IVLogout);
         UserName= findViewById(R.id.username);
+        UserPName= findViewById(R.id.TVpusername);
+        UserEmail= findViewById(R.id.TVpuseremail);
+        UserDesignation= findViewById(R.id.TVpuserdesignation);
+        UserNumber= findViewById(R.id.TVpusernumber);
+        UserProgram= findViewById(R.id.TVpuserprogram);
+
+        IVback.setVisibility(View.INVISIBLE);
         IVProfile=findViewById(R.id.IVProfile);
-        IVSearch= findViewById(R.id.IVsearch);
+        IVProfile.setVisibility(View.INVISIBLE);
+        IVSearch=findViewById(R.id.IVsearch);
+        IVSearch.setVisibility(View.INVISIBLE);
 
-
-        final RecyclerView RVContact = findViewById(R.id.recyclerview_id);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(Contactlist.this, HomeActivity.class));
+                    startActivity(new Intent(Userprofile.this, HomeActivity.class));
                 }
             }
         };
 
-        IVback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent homeactivity = new Intent (Contactlist.this, HomeActivity.class);
-                startActivity(homeactivity);
-            }
-        });
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(Contactlist.this, SignIn.class));
+                    startActivity(new Intent(Userprofile.this, SignIn.class));
                 }
             }
         };
@@ -113,42 +112,24 @@ public class Contactlist extends AppCompatActivity {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
 
-        /*----------------------------------------------------------------------------------------*/
-
-        /*-------------------------------- Course List Fetch -------------------------------------*/
 
 
-        lstContact = new ArrayList<>();
 
         rootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
                 UserName.setText(userName);
-                String userid[] = new String[20];
-                String name[] = new String[20];
-                String email[] = new String[20];
-                String number[] = new String[20];
+                UserPName.setText(userName);
+                String userEmail = dataSnapshot.child("Users").child(UserId).child("userEmail").getValue(String.class);
+                UserEmail.setText(userEmail);
+                String userNumber = dataSnapshot.child("Users").child(UserId).child("userNumber").getValue(String.class);
+                UserNumber.setText(userNumber);
+                String userDesignation = dataSnapshot.child("Users").child(UserId).child("userDesignation").getValue(String.class);
+                UserDesignation.setText(userDesignation);
+                String userProgram = dataSnapshot.child("Users").child(UserId).child("userProgram").getValue(String.class);
+                UserProgram.setText(userProgram);
 
-                lstContact.clear();
-                if (dataSnapshot.exists()) {
-
-                    int i = 1;
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Users").getChildren()) {
-                        userid[i]= dataSnapshot1.getKey();
-                        name[i]=dataSnapshot.child("Users").child(userid[i]).child("userName").getValue(String.class);
-                        email[i]=dataSnapshot.child("Users").child(userid[i]).child("userEmail").getValue(String.class);
-                        number[i]=dataSnapshot.child("Users").child(userid[i]).child("userNumber").getValue(String.class);
-
-                     //   if(name[i].contains(ETSearch.getText().toString().trim())) {
-                            lstContact.add(new Contact(name[i], email[i], number[i]));
-                     //   }
-                        i++;
-                    }
-                }else{
-                    RVContact.setVisibility(View.GONE);
-                }
-                contactAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -158,9 +139,6 @@ public class Contactlist extends AppCompatActivity {
             }
         });
 
-        contactAdapter = new ContactRecyclerViewAdapter(this,lstContact);
-        RVContact.setLayoutManager(new LinearLayoutManager(this));
-        RVContact.setAdapter(contactAdapter);
 
 
     }

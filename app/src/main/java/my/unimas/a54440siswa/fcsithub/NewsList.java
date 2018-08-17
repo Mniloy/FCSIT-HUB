@@ -64,8 +64,8 @@ public class NewsList extends AppCompatActivity {
 
 
 
-        IVback = (ImageView) findViewById(R.id.IVback);
-        IVLogout = (ImageView) findViewById(R.id.IVLogout);
+        IVback =  findViewById(R.id.IVback);
+        IVLogout = findViewById(R.id.IVLogout);
         UserName= findViewById(R.id.username);
 
 
@@ -164,13 +164,5 @@ public class NewsList extends AppCompatActivity {
 
 
     }
-
-    public boolean onCreateOptionMenu (Menu menu){
-        getMenuInflater().inflate(R.menu.searchview, menu);
-        return true;
-    }
-
-
-
 
 }
