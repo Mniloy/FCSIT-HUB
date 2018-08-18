@@ -36,7 +36,7 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    CardView CVFacilities, CVDirectory, CVContact, CVEleap, CVMessage, CVNews, CVAnnouncement;
+    CardView CVFacilities, CVDirectory, CVContact, CVEleap, CVMessage, CVNews, CVAnnouncement, CVMedia;
     Button BTNPost;
     ImageButton IVDelete, IBEleap;
 
@@ -53,10 +53,6 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthListener;
-
-
-
-
 
 
     @Override
@@ -91,6 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         CVAnnouncement=findViewById(R.id.CVannouncement);
         CVMessage= findViewById(R.id.CVmessage);
         CVNews = findViewById(R.id.CVnews);
+        CVMedia= findViewById(R.id.CVMedia);
 
         IVLogout =  findViewById(R.id.IVLogout);
         ETpost= findViewById(R.id.ETpost);
@@ -118,42 +115,53 @@ public class HomeActivity extends AppCompatActivity {
                     ETpost.setError("Type Something");
                 } else if (ETpost.getText().toString().length() >= 300) {
                     ETpost.setError("Note should be less than 300 characters");
-                } else {
-                    if (Rnews.isChecked()){
+                } else
+                    {
+                        if (Rnews.isChecked()) {
 
-                        String post = ETpost.getText().toString().trim();
-                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("News").push();
-                        postRef.child("PostUserId").setValue(UserId);
-                        postRef.child("PostUserName").setValue(postusername);
-                        postRef.child("Post").setValue(post);
-                        postRef.child("PostTime").setValue(getCurrentTime());
-                        postRef.child("PostDate").setValue(getCurrentDate());
-                        Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
-                        ETpost.setText("");
+                            String post = ETpost.getText().toString().trim();
+                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("News").push();
+                            postRef.child("PostUserId").setValue(UserId);
+                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("Post").setValue(post);
+                            postRef.child("PostTime").setValue(getCurrentTime());
+                            postRef.child("PostDate").setValue(getCurrentDate());
+                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                            ETpost.setText("");
 
 
-                    }else if (Rannouncement.isChecked()){
+                        } else if (Rannouncement.isChecked()) {
 
-                        String post = ETpost.getText().toString().trim();
-                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Announcement").push();
-                        postRef.child("PostUserId").setValue(UserId);
-                        postRef.child("PostUserName").setValue(postusername);
-                        postRef.child("Post").setValue(post);
-                        postRef.child("PostTime").setValue(getCurrentTime());
-                        postRef.child("PostDate").setValue(getCurrentDate());
-                        Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
-                        ETpost.setText("");
-                    }else{
-                        Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
-                        ETpost.setText("");
+                            String post = ETpost.getText().toString().trim();
+                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Announcement").push();
+                            postRef.child("PostUserId").setValue(UserId);
+                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("Post").setValue(post);
+                            postRef.child("PostTime").setValue(getCurrentTime());
+                            postRef.child("PostDate").setValue(getCurrentDate());
+                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                            ETpost.setText("");
+                        } else if (Rmedia.isChecked()) {
+                            String post = ETpost.getText().toString().trim();
+                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Media").push();
+                            postRef.child("PostUserId").setValue(UserId);
+                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("Post").setValue(post);
+                            postRef.child("PostTime").setValue(getCurrentTime());
+                            postRef.child("PostDate").setValue(getCurrentDate());
+                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                            ETpost.setText("");
+                        }else
+                            {
+                                Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
+                                ETpost.setText("");
+
+                            }
+
 
                     }
-
-
-
                 }
-            }
-        });
+            });
 
 
 
@@ -224,6 +232,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        CVMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent media = new Intent(HomeActivity.this, MediaList.class);
+                startActivity(media);
+            }
+        });
+
         CVEleap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent browserIntent = new Intent(
@@ -263,9 +279,5 @@ public class HomeActivity extends AppCompatActivity {
         Date date = new Date();
         return dateFormat.format(date);
     }
-
-
-
-
 
 }

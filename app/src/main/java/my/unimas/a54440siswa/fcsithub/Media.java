@@ -1,23 +1,23 @@
 
 package my.unimas.a54440siswa.fcsithub;
-public class Announcement {
+public class Media {
 
     private String Post;
     private String PostUserName ;
     private String PostTime ;
     private String PostDate ;
-    private String AnnouncementID ;
+    private String MediaID ;
     private String UserID ;
 
-    public Announcement() {
+    public Media() {
     }
 
-    public Announcement(String post, String postusername, String posttime, String postdate, String announcementid, String userid) {
+    public Media(String post, String postusername, String posttime, String postdate, String mediaid, String userid) {
         Post = post;
         PostUserName = postusername;
         PostTime = posttime;
         PostDate = postdate;
-        AnnouncementID = announcementid;
+        MediaID = mediaid;
         UserID = userid;
     }
 
@@ -38,8 +38,8 @@ public class Announcement {
         return PostDate;
     }
 
-    public String getAnnouncementID() {
-        return AnnouncementID;
+    public String getMediaID() {
+        return MediaID;
     }
 
     public String getUserID() {
@@ -56,7 +56,7 @@ public class Announcement {
 
     public void setPostDate(String postdate) { PostDate = postdate; }
 
-    public void setAnnouncementID(String announcementid) { PostDate = announcementid; }
+    public void setMediaID(String mediaid) { PostDate = mediaid; }
 
     public void setUserID(String userid) { PostDate = userid; }
 

@@ -28,7 +28,8 @@
         <activity android:name=".Eleap" />
         <activity android:name=".NewsList" />
         <activity android:name=".AnnouncementList" />
-        <activity android:name=".Userprofile"></activity>
+        <activity android:name=".Userprofile"/>
+        <activity android:name=".MediaList"/>
     </application>
 
 </manifest>
