@@ -26,7 +26,7 @@ import java.util.List;
 public class AnnouncementList extends AppCompatActivity {
 
     String UserId;
-    ImageView IVLogout;
+    ImageView IVLogout, IVProfile, IVSearch ;
     ImageView IVback;
     TextView UserName;
     TextView PostTime;
@@ -63,8 +63,14 @@ public class AnnouncementList extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        IVback = (ImageView) findViewById(R.id.IVback);
-        IVLogout = (ImageView) findViewById(R.id.IVLogout);
+        IVback =  findViewById(R.id.IVback);
+        IVLogout =  findViewById(R.id.IVLogout);
+        IVLogout.setVisibility(View.INVISIBLE);
+        IVProfile =  findViewById(R.id.IVProfile);
+        IVProfile.setVisibility(View.INVISIBLE);
+        IVSearch =  findViewById(R.id.IVsearch);
+        IVSearch.setVisibility(View.INVISIBLE);
+
         UserName= findViewById(R.id.username);
 
 
@@ -88,7 +94,7 @@ public class AnnouncementList extends AppCompatActivity {
         });
 
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
@@ -102,7 +108,7 @@ public class AnnouncementList extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
             }
-        });
+        }); */
 
         /* ------------------------------ Firebase Elements --------------------------------------*/
         user = mAuth.getCurrentUser();

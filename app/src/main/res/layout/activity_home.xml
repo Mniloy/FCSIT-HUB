@@ -1,177 +1,371 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#66c066"
-    android:backgroundTintMode="multiply">
-
-    <include layout="@layout/activity_actionbar" />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/offwhitebackground">
 
 
-    <EditText
-        android:id="@+id/ETpost"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:background="#ffffff"/>
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <include layout="@layout/activity_actionbar"
+            android:id="@+id/action_bar"/>
 
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/attachment"/>
-
-        <RadioGroup
+        <EditText
+            android:id="@+id/ETpost"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-            <RadioButton android:id="@+id/radio_news"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/action_bar"
+            android:background="#ffffff"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="61dp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/ETpost"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="189dp">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/attachment" />
+
+
+            <RadioButton
+                android:id="@+id/radio_news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="News"
-                android:textStyle="bold"
-                android:textSize="15dp" />
-            <RadioButton android:id="@+id/radio_announcement"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/radio_announcement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Announcement"
-                android:textStyle="bold"
-                android:textSize="15dp" />
-            <RadioButton android:id="@+id/radio_media"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/radio_media"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="Media"
-                android:textSize="15dp" />
-        </RadioGroup>
-
-
-    </LinearLayout>
-
-
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/BTNpost"
-            android:layout_width="100dp"
+            android:layout_width="140dp"
             android:layout_height="40dp"
-            android:layout_marginRight="24dp"
-            android:layout_gravity="right"
-            android:background= "@drawable/buttonstyle"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/linearLayout"
+            android:background="@drawable/buttonstyle"
             android:text="Post"
-            android:textStyle="bold"
             android:textSize="20dp"
-            android:textColor="#111" />
+            android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="260dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="271dp">
 
-        <GridLayout
-            android:id="@+id/favorites_grid"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:rowCount="3"
-            android:columnCount="3">
-            <Button
-                android:id="@+id/BTNnews"
-                android:layout_width="100dp"
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVnews"
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="NEWS"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#111"/>
-            <Button
-                android:id="@+id/BTNdirectory"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="DIRECTORY"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#111"/>
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
 
-            <Button
-                android:id="@+id/BTNfacilities"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="FACILLTIES"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#111"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/BTNAnnouncement"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="Announcement"
-                android:textStyle="bold"
-                android:textSize="12dp"
-                android:textColor="#111"/>
-            <Button
-                android:id="@+id/BTNMessage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="Message"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#111"/>
-            <Button
-                android:id="@+id/BTNMedia"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="MEDIA"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#111"/>
-            <Button
-                android:id="@+id/BTNContact"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="CONTACTS"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#111"/>
-            <Button
-                android:id="@+id/BTNEleap"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:background= "@drawable/buttonstyle"
-                android:text="ELEAP"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#111"/>
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="News"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
-        </GridLayout>
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/news"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-    </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVannouncement"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="Announcement"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/announcement"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVmedia"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="Media"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/media"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVmessage"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="Message"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
 
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/message"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-    </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVcontact"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="Contact"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/contacts"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVdirectory"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="Directory"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/directory"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVeleap"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="ELeap"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/eleap"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/CVfacilities"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluegradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="Facilities"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="80dp"
+                        android:src="@drawable/facilities"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>
+
 
 
 

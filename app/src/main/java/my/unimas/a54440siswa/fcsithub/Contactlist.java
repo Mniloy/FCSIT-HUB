@@ -66,10 +66,14 @@ public class Contactlist extends AppCompatActivity {
 
 
         IVback =  findViewById(R.id.IVback);
-        IVLogout = (ImageView) findViewById(R.id.IVLogout);
+        IVLogout= findViewById(R.id.IVLogout);
         UserName= findViewById(R.id.username);
-        IVProfile=findViewById(R.id.IVProfile);
         IVSearch= findViewById(R.id.IVsearch);
+        IVProfile=findViewById(R.id.IVProfile);
+        IVProfile.setVisibility(View.INVISIBLE);
+        IVLogout.setVisibility(View.INVISIBLE);
+
+
 
 
         final RecyclerView RVContact = findViewById(R.id.recyclerview_id);
@@ -91,7 +95,7 @@ public class Contactlist extends AppCompatActivity {
             }
         });
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
@@ -105,7 +109,7 @@ public class Contactlist extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
             }
-        });
+        });*/
 
         /* ------------------------------ Firebase Elements --------------------------------------*/
         user = mAuth.getCurrentUser();

@@ -36,8 +36,9 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button BTNFacilities, BTNDirectory, BTNContact, BTNEleap, BTNMessage, BTNPost, BTNNews, BTNAnnouncement;
-    ImageButton IVDelete;
+    CardView CVFacilities, CVDirectory, CVContact, CVEleap, CVMessage, CVNews, CVAnnouncement;
+    Button BTNPost;
+    ImageButton IVDelete, IBEleap;
 
     ImageView IVLogout, IVBack, IVProfile, IVSearch;
     String UserId;
@@ -77,20 +78,25 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
 
+
         IVBack =findViewById(R.id.IVback);
         IVBack.setVisibility(View.INVISIBLE);
         IVSearch =findViewById(R.id.IVsearch);
         IVSearch.setVisibility(View.INVISIBLE);
-        BTNFacilities = (Button) findViewById(R.id.BTNfacilities);
-        BTNDirectory = (Button) findViewById(R.id.BTNdirectory);
-        BTNContact = (Button) findViewById(R.id.BTNContact);
-        BTNEleap = (Button) findViewById(R.id.BTNEleap);
-        BTNMessage=(Button) findViewById(R.id.BTNMessage);
-        IVLogout = (ImageView) findViewById(R.id.IVLogout);
+
+        CVEleap =findViewById(R.id.CVeleap);
+        CVFacilities =  findViewById(R.id.CVfacilities);
+        CVDirectory = findViewById(R.id.CVdirectory);
+        CVContact =  findViewById(R.id.CVcontact);
+        CVAnnouncement=findViewById(R.id.CVannouncement);
+        CVMessage= findViewById(R.id.CVmessage);
+        CVNews = findViewById(R.id.CVnews);
+
+        IVLogout =  findViewById(R.id.IVLogout);
         ETpost= findViewById(R.id.ETpost);
         BTNPost = findViewById(R.id.BTNpost);
-        BTNNews = findViewById(R.id.BTNnews);
-        BTNAnnouncement=(Button) findViewById(R.id.BTNAnnouncement);
+
+
         Rnews = findViewById(R.id.radio_news);
         Rannouncement = findViewById(R.id.radio_announcement);
         Rmedia = findViewById(R.id.radio_media);
@@ -184,7 +190,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        BTNFacilities.setOnClickListener(new View.OnClickListener() {
+        CVFacilities.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent facilities = new Intent (HomeActivity.this, Facilities.class);
@@ -200,7 +206,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        BTNDirectory.setOnClickListener(new View.OnClickListener() {
+        CVDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent browserIntent = new Intent(
@@ -210,7 +216,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        BTNContact.setOnClickListener(new View.OnClickListener() {
+        CVContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent contacts = new Intent(HomeActivity.this, Contactlist.class);
@@ -218,7 +224,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        BTNEleap.setOnClickListener(new View.OnClickListener() {
+        CVEleap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent browserIntent = new Intent(
                         Intent.ACTION_VIEW,
@@ -227,14 +233,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        BTNNews.setOnClickListener(new View.OnClickListener() {
+        CVNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent news = new Intent(HomeActivity.this, NewsList.class);
                 startActivity(news);
             }
         });
-        BTNAnnouncement.setOnClickListener(new View.OnClickListener() {
+        CVAnnouncement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent announcement = new Intent(HomeActivity.this, AnnouncementList.class);

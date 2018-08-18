@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Facilities extends AppCompatActivity {
 
     ImageView IVLogout;
-    ImageView IVback;
+    ImageView IVback, IVProfile, IVSearch;
     String UserId;
     TextView UserName;
 
@@ -53,8 +53,14 @@ public class Facilities extends AppCompatActivity {
         setContentView(R.layout.activity_facilities);
         mAuth = FirebaseAuth.getInstance();
 
-        IVback = (ImageView) findViewById(R.id.IVback);
-        IVLogout = (ImageView) findViewById(R.id.IVLogout);
+        IVback =  findViewById(R.id.IVback);
+        IVProfile =  findViewById(R.id.IVProfile);
+        IVLogout =  findViewById(R.id.IVLogout);
+        IVLogout.setVisibility(View.INVISIBLE);
+        IVSearch =  findViewById(R.id.IVsearch);
+        IVSearch.setVisibility(View.INVISIBLE);
+        IVProfile.setVisibility(View.INVISIBLE);
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
@@ -95,7 +101,7 @@ public class Facilities extends AppCompatActivity {
         });
 
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
@@ -109,7 +115,7 @@ public class Facilities extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
             }
-        });
+        }); */
 
 
     }

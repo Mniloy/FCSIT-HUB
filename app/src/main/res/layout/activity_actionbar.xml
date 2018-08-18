@@ -2,7 +2,8 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="50dp"
     android:layout_width="match_parent"
-    android:background="#F10E0E">
+    android:background="@drawable/actionbar"
+    >
 
     <LinearLayout
         android:layout_width="wrap_content"

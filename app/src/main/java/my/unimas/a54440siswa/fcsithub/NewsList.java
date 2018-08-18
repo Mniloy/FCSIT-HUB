@@ -26,7 +26,7 @@ import java.util.List;
 public class NewsList extends AppCompatActivity {
 
     String UserId;
-    ImageView IVLogout;
+    ImageView IVLogout, IVSearch, IVProfile;
     ImageView IVback;
     TextView UserName;
     TextView PostTime;
@@ -66,6 +66,12 @@ public class NewsList extends AppCompatActivity {
 
         IVback =  findViewById(R.id.IVback);
         IVLogout = findViewById(R.id.IVLogout);
+        IVLogout.setVisibility(View.INVISIBLE);
+        IVProfile =findViewById(R.id.IVProfile);
+        IVProfile.setVisibility(View.INVISIBLE);
+        IVSearch =findViewById(R.id.IVsearch);
+        IVSearch.setVisibility(View.INVISIBLE);
+
         UserName= findViewById(R.id.username);
 
 
@@ -89,7 +95,7 @@ public class NewsList extends AppCompatActivity {
         });
 
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
@@ -103,7 +109,7 @@ public class NewsList extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
             }
-        });
+        });  */
 
         /* ------------------------------ Firebase Elements --------------------------------------*/
         user = mAuth.getCurrentUser();
