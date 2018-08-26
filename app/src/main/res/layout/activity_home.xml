@@ -24,7 +24,15 @@
             android:background="#ffffff"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="10dp"
-            tools:layout_editor_absoluteY="61dp" />
+            tools:layout_editor_absoluteY="61dp"
+            android:focusedByDefault="false"/>
+
+        <ProgressBar
+            android:id="@+id/pmupb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ETpost"
+            style="?android:attr/progressBarStyleHorizontal"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -32,21 +40,23 @@
             android:layout_height="34dp"
             android:layout_margin="5dp"
             android:gravity="center_horizontal"
-            android:layout_below="@+id/ETpost"
+            android:layout_below="@+id/pmupb"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="189dp">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/IVAttachment"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/attachment" />
 
 
+
+
             <RadioButton
                 android:id="@+id/radio_news"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="News"
                 android:textSize="15dp"
@@ -62,12 +72,22 @@
 
             <RadioButton
                 android:id="@+id/radio_media"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Media"
                 android:textSize="15dp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/TVAttachmentName"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:text="File Name"
+            android:textSize="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/linearLayout"/>
 
         <Button
             android:id="@+id/BTNpost"
@@ -86,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="260dp"
+            android:layout_marginTop="280dp"
             android:orientation="vertical"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp"

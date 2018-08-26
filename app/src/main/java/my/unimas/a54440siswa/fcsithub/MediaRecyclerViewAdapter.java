@@ -13,8 +13,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -43,11 +44,23 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
         return new MyViewHolder(view);
     }
 
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+
+
+
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        StorageReference mediaRef =storageReference.child("Media/" +mData.get(position).getMediaID());
 
         holder.TVPost.setText(mData.get(position).getPost());
         holder.TVUserName.setText(mData.get(position).getPostUserName());
+
+        GlideApp.with(mContext /* context */)
+                .load(mediaRef)
+                .into(holder.IVMediaItem);
+
         holder.TVPostTime.setText(mData.get(position).getPostTime());
         holder.TVPostDate.setText(mData.get(position).getPostDate());
         holder.IVDelete.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +90,7 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView TVPost, TVUserName, TVPostTime, TVPostDate, TVMError;
-        ImageView IVDelete;
+        ImageView IVDelete, IVMediaItem;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -88,6 +101,7 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
             TVPostDate =  itemView.findViewById(R.id.TVMPostDate) ;
             IVDelete = itemView.findViewById(R.id.IVDelete);
             TVMError = itemView.findViewById(R.id.TVMError);
+            IVMediaItem =itemView.findViewById(R.id.IVmediaitem);
 
 
 

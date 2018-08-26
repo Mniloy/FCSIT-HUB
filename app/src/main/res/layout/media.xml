@@ -16,6 +16,13 @@
         android:background="@drawable/greengradient"
         android:backgroundTintMode="multiply">
 
+        <ImageView
+            android:id="@+id/IVmediaitem"
+            android:layout_width="370dp"
+            android:layout_height="200dp"/>
+
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

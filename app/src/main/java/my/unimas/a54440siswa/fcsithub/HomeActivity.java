@@ -1,26 +1,28 @@
 package my.unimas.a54440siswa.fcsithub;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Message;
-import android.provider.ContactsContract;
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,19 +47,27 @@ public class HomeActivity extends AppCompatActivity {
     Button BTNPost;
     ImageButton IVDelete, IBEleap;
 
-    ImageView IVLogout, IVBack, IVProfile, IVSearch;
+    ImageView IVLogout, IVBack, IVProfile, IVSearch, IVAttachment;
     String UserId;
     String postusername;
     String password;
-    TextView UserName;
+    TextView UserName, TVAttachmentName;
     LinearLayout layout;
     EditText ETpost;
     RadioButton Rnews, Rannouncement, Rmedia;
+    ProgressBar mProgressBar;
+
+    private Uri mImageUri;
+
+
+    private static final int PICK_IMAGE_REQUEST = 1;
 
 
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthListener;
+
+    private StorageTask mUploadTask;
 
 
     @Override
@@ -88,6 +103,9 @@ public class HomeActivity extends AppCompatActivity {
         CVMessage= findViewById(R.id.CVmessage);
         CVNews = findViewById(R.id.CVnews);
         CVMedia= findViewById(R.id.CVMedia);
+        IVAttachment=findViewById(R.id.IVAttachment);
+        mProgressBar =findViewById(R.id.pmupb);
+        TVAttachmentName =findViewById(R.id.TVAttachmentName);
 
         IVLogout =  findViewById(R.id.IVLogout);
         ETpost= findViewById(R.id.ETpost);
@@ -102,6 +120,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
         postusername =user.getDisplayName();
@@ -142,15 +161,21 @@ public class HomeActivity extends AppCompatActivity {
                             Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
                             ETpost.setText("");
                         } else if (Rmedia.isChecked()) {
-                            String post = ETpost.getText().toString().trim();
-                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Media").push();
-                            postRef.child("PostUserId").setValue(UserId);
-                            postRef.child("PostUserName").setValue(postusername);
-                            postRef.child("Post").setValue(post);
-                            postRef.child("PostTime").setValue(getCurrentTime());
-                            postRef.child("PostDate").setValue(getCurrentDate());
-                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
-                            ETpost.setText("");
+
+
+                             DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Media").push();
+                             String postid= postRef.getKey();
+                             uploadFile(postRef, postid);
+
+                             String post = ETpost.getText().toString().trim();
+                             postRef.child("PostUserId").setValue(UserId);
+                             postRef.child("PostUserName").setValue(postusername);
+                             postRef.child("Post").setValue(post);
+                             postRef.child("PostTime").setValue(getCurrentTime());
+                             postRef.child("PostDate").setValue(getCurrentDate());
+                             Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                           //  ETpost.setText("");
+
                         }else
                             {
                                 Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
@@ -256,11 +281,26 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(news);
             }
         });
+
+        IVAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            openFileChooser();
+            }
+        });
         CVAnnouncement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent announcement = new Intent(HomeActivity.this, AnnouncementList.class);
                 startActivity(announcement);
+            }
+        });
+
+        CVMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+           //     Intent message = new Intent(HomeActivity.this, AttachmentActivity.class);
+           //     startActivity(message);
             }
         });
 
@@ -278,6 +318,74 @@ public class HomeActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            mImageUri = data.getData();
+
+           // Picasso.with(this).load(mImageUri).into(mImageView);
+        }
+    }
+
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private void uploadFile(final DatabaseReference postRef, final String postid) {
+        if (mImageUri != null) {
+
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child("Media/").child(postid);
+
+
+            mUploadTask = mStorageRef.putFile(mImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mProgressBar.setProgress(0);
+                                }
+                            }, 500);
+
+                            Toast.makeText(HomeActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            postRef.child("mediaRef").setValue(postid);
+                            TVAttachmentName.setText(postid+".jpg");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            mProgressBar.setProgress((int) progress);
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
