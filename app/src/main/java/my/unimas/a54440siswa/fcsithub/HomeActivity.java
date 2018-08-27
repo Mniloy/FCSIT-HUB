@@ -161,22 +161,10 @@ public class HomeActivity extends AppCompatActivity {
                             Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
                             ETpost.setText("");
                         } else if (Rmedia.isChecked()) {
-
-
                              DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Media").push();
                              String postid= postRef.getKey();
                              uploadFile(postRef, postid);
-
-                             String post = ETpost.getText().toString().trim();
-                             postRef.child("PostUserId").setValue(UserId);
-                             postRef.child("PostUserName").setValue(postusername);
-                             postRef.child("Post").setValue(post);
-                             postRef.child("PostTime").setValue(getCurrentTime());
-                             postRef.child("PostDate").setValue(getCurrentDate());
-                             Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
-                           //  ETpost.setText("");
-
-                        }else
+                             }else
                             {
                                 Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
                                 ETpost.setText("");
@@ -326,6 +314,7 @@ public class HomeActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        TVAttachmentName.setText("Attachment Added for Uploading");
     }
 
     @Override
@@ -352,7 +341,6 @@ public class HomeActivity extends AppCompatActivity {
 
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child("Media/").child(postid);
 
-
             mUploadTask = mStorageRef.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -365,9 +353,17 @@ public class HomeActivity extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            Toast.makeText(HomeActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            String post = ETpost.getText().toString().trim();
+                            postRef.child("PostUserId").setValue(UserId);
+                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("Post").setValue(post);
+                            postRef.child("PostTime").setValue(getCurrentTime());
+                            postRef.child("PostDate").setValue(getCurrentDate());
                             postRef.child("mediaRef").setValue(postid);
-                            TVAttachmentName.setText(postid+".jpg");
+                            Toast.makeText(HomeActivity.this, "Media Upload successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                            ETpost.setText("");
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

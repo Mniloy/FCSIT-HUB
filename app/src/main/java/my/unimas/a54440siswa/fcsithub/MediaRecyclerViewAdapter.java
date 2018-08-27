@@ -1,14 +1,21 @@
 package my.unimas.a54440siswa.fcsithub;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +34,8 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
     FirebaseAuth mAuth;
     FirebaseUser user;
     String UserID;
+
+
 
 
 
@@ -51,15 +60,30 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
 
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         StorageReference mediaRef =storageReference.child("Media/" +mData.get(position).getMediaID());
 
         holder.TVPost.setText(mData.get(position).getPost());
         holder.TVUserName.setText(mData.get(position).getPostUserName());
 
+
         GlideApp.with(mContext /* context */)
                 .load(mediaRef)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        holder.ImageLoading.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.ImageLoading.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
                 .into(holder.IVMediaItem);
+
 
         holder.TVPostTime.setText(mData.get(position).getPostTime());
         holder.TVPostDate.setText(mData.get(position).getPostDate());
@@ -91,6 +115,7 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
 
         TextView TVPost, TVUserName, TVPostTime, TVPostDate, TVMError;
         ImageView IVDelete, IVMediaItem;
+        ProgressBar ImageLoading;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -102,6 +127,7 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
             IVDelete = itemView.findViewById(R.id.IVDelete);
             TVMError = itemView.findViewById(R.id.TVMError);
             IVMediaItem =itemView.findViewById(R.id.IVmediaitem);
+            ImageLoading =itemView.findViewById(R.id.progress_circle);
 
 
 

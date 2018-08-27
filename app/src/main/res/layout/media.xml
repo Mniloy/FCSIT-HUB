@@ -16,10 +16,30 @@
         android:background="@drawable/greengradient"
         android:backgroundTintMode="multiply">
 
-        <ImageView
-            android:id="@+id/IVmediaitem"
-            android:layout_width="370dp"
-            android:layout_height="200dp"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ProgressBar
+                android:id="@+id/progress_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                android:elevation="20dp"/>
+
+            <ImageView
+                android:id="@+id/IVmediaitem"
+                android:layout_width="370dp"
+                android:layout_height="200dp"
+                android:elevation="-10dp"/>
+
+
+
+        </FrameLayout>
+
+
 
 
 
