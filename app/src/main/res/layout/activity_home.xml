@@ -52,8 +52,6 @@
                 android:background="@drawable/attachment" />
 
 
-
-
             <RadioButton
                 android:id="@+id/radio_news"
                 android:layout_width="80dp"

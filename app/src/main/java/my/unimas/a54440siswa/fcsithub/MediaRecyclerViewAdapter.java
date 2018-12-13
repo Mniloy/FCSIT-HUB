@@ -37,8 +37,6 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
 
 
 
-
-
     public MediaRecyclerViewAdapter(Context mContext, List<Media> mData) {
         this.mContext = mContext;
         this.mData = mData;

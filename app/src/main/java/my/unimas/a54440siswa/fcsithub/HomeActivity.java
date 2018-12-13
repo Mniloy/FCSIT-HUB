@@ -287,8 +287,8 @@ public class HomeActivity extends AppCompatActivity {
         CVMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           //     Intent message = new Intent(HomeActivity.this, AttachmentActivity.class);
-           //     startActivity(message);
+                Intent message = new Intent(HomeActivity.this, ChatListActivity.class);
+                startActivity(message);
             }
         });
 
