@@ -114,11 +114,12 @@ public class ChatActivity extends AppCompatActivity {
 
                     String post = ETMessage.getText().toString().trim();
                     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(UserId).child("Chat").child(ChatPartnerUserId).push();
+                    String key = userRef.getKey();
                     userRef.child("message").setValue(post);
                     userRef.child("senderId").setValue(UserId);
                     userRef.child("time").setValue(getCurrentTime());
 
-                    DatabaseReference partnerRef = FirebaseDatabase.getInstance().getReference().child("Users").child(ChatPartnerUserId).child("Chat").child(UserId).push();
+                    DatabaseReference partnerRef = FirebaseDatabase.getInstance().getReference().child("Users").child(ChatPartnerUserId).child("Chat").child(UserId).child(key);
                     partnerRef.child("message").setValue(post);
                     partnerRef.child("senderId").setValue(UserId);
                     partnerRef.child("time").setValue(getCurrentTime());
@@ -194,7 +195,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         chatMessageAdapter = new ChattingRecyclerViewAdapter(this,lstChatMessage);
-        RVChatMessage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true));
+        RVChatMessage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         RVChatMessage.setAdapter(chatMessageAdapter);
 
 
