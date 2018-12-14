@@ -157,10 +157,10 @@ public class ChatActivity extends AppCompatActivity {
                 String userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
                 TVUserName.setText(userName);
 
-                String chatmessageid[] = new String[30];
-                String senderId[] = new String[30];
-                String message[] = new String[100];
-                String time[] =new String[100];
+                String chatmessageid[] = new String[500];
+                String senderId[] = new String[500];
+                String message[] = new String[500];
+                String time[] =new String[500];
 
 
                 lstChatMessage.clear();
