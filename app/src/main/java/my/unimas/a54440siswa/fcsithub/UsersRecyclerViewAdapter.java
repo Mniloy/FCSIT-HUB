@@ -109,8 +109,8 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
 
                 DatabaseReference chatpartner_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(mData.get(position).getUserID()).child("Chat").child(userID);
                 Map chatpartnerdata = new HashMap();
-                chatpartnerdata.put("ChatPartnerID", mData.get(position).getUserID());
-                chatpartnerdata.put("ChatPartnerName", mData.get(position).getUserName());
+                chatpartnerdata.put("ChatPartnerID", userID);
+                chatpartnerdata.put("ChatPartnerName", userName);
                 chatpartner_user_db.updateChildren(chatpartnerdata);
 
            //     DatabaseReference chatpartner_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(mData.get(position).getUserID()).child("Chat").child(userID);
