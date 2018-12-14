@@ -34,10 +34,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     FirebaseAuth mAuth;
     FirebaseUser user;
-    String UserID;
-
-
-
 
 
     public ChatRecyclerViewAdapter(Context mContext, List<Chat> mData) {
@@ -50,12 +46,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.users,parent,false);
+        view = mInflater.inflate(R.layout.chatusers,parent,false);
         return new MyViewHolder(view);
     }
 
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
 
 
     @Override
@@ -87,8 +82,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ChatActivity.class);
-                // passing data to the book activity
-                intent.putExtra("ChatId", mData.get(position).getChatId());
+                // passing data to the book activit
                 intent.putExtra("ChatUserId", mData.get(position).getChatUserId());
                 intent.putExtra("ChatUserName", mData.get(position).getChatUserName());
                 mContext.startActivity(intent);
@@ -113,9 +107,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            TVChatUserName = itemView.findViewById(R.id.tvcusername) ;
-            CVChatUser =  itemView.findViewById(R.id.cvcuserprofile) ;
-            LVChatUsers = itemView.findViewById(R.id.lvcusers) ;
+            TVChatUserName = itemView.findViewById(R.id.tvchatusername) ;
+            CVChatUser =  itemView.findViewById(R.id.cvchatuserprofile) ;
+            LVChatUsers = itemView.findViewById(R.id.lvchatusers) ;
 
 
 

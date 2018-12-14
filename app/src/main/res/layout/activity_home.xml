@@ -4,12 +4,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/offwhitebackground">
+    android:background="@color/offwhitebackground"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <include layout="@layout/activity_actionbar"
             android:id="@+id/action_bar"/>
@@ -25,7 +29,8 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="61dp"
-            android:focusedByDefault="false"/>
+            android:focusedByDefault="false"
+            android:focusableInTouchMode="true"/>
 
         <ProgressBar
             android:id="@+id/pmupb"

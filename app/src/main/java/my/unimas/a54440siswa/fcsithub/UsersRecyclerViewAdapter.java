@@ -19,10 +19,14 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,6 +37,7 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
     private List<Users> mData ;
     FirebaseAuth mAuth;
     FirebaseUser user;
+    String UserId;
 
     public UsersRecyclerViewAdapter(Context mContext, List<Users> mData) {
         this.mContext = mContext;
@@ -52,6 +57,20 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         StorageReference mediaRef =storageReference.child("profilepic/" +mData.get(position).getUserID()+".jpg");
+        mAuth = FirebaseAuth.getInstance();
+
+
+        user = mAuth.getCurrentUser();
+        UserId= user.getUid();
+
+        final String userID = mAuth.getCurrentUser().getUid();
+        final String userName = mAuth.getCurrentUser().getDisplayName();
+        final String userEmail = mAuth.getCurrentUser().getEmail();
+        DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+        Map newPost = new HashMap();
+        newPost.put("userName", userName);
+        newPost.put("userEmail", userEmail);
+        current_user_db.updateChildren(newPost);
 
         holder.TVUserName.setText(mData.get(position).getUserName());
 
@@ -78,6 +97,28 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+
+                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Chat").child(mData.get(position).getUserID());
+                Map owndata = new HashMap();
+                owndata.put("ChatPartnerID", mData.get(position).getUserID());
+                owndata.put("ChatPartnerName", mData.get(position).getUserName());
+                current_user_db.updateChildren(owndata);
+
+              //  current_user_db.child("ChatPartnerID").setValue(mData.get(position).getUserID());
+              //  current_user_db.child("ChatPartnerName").setValue(mData.get(position).getUserName());
+
+                DatabaseReference chatpartner_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(mData.get(position).getUserID()).child("Chat").child(userID);
+                Map chatpartnerdata = new HashMap();
+                chatpartnerdata.put("ChatPartnerID", mData.get(position).getUserID());
+                chatpartnerdata.put("ChatPartnerName", mData.get(position).getUserName());
+                chatpartner_user_db.updateChildren(chatpartnerdata);
+
+           //     DatabaseReference chatpartner_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(mData.get(position).getUserID()).child("Chat").child(userID);
+           //     chatpartner_user_db.child("ChatPartnerID").setValue(userID);
+           //     chatpartner_user_db.child("ChatPartnerName").setValue(userName);
+
+
+
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 // passing data to the book activity
                 intent.putExtra("ChatUserId", mData.get(position).getUserID());
