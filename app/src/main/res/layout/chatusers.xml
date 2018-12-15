@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:background="#fde2e5">
 
             <LinearLayout
@@ -46,7 +47,7 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Tap to start messaging"
                 android:gravity="center"
@@ -55,8 +56,12 @@
                 android:textSize="12sp"
                 android:textStyle="italic"/>
 
-
-
+            <ImageView
+                android:id="@+id/status"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/unread"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

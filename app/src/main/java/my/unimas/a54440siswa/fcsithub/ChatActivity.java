@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,8 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
+
+
 public class ChatActivity extends AppCompatActivity {
 
     ImageView IVLogout, IVBack, IVProfile, IVAttachment, IVbtnMessage;
@@ -45,11 +48,12 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthListener;
+    private NotificationManagerCompat notificationManager;
 
     ChattingRecyclerViewAdapter chatMessageAdapter;
 
     String ChatPartnerUserId, ChatPartnerUserName;
-    List<ChatMessage> lstChatMessage ;
+    static List<ChatMessage> lstChatMessage ;
 
 
     @Override
@@ -70,6 +74,8 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         mAuth = FirebaseAuth.getInstance();
+
+        notificationManager = NotificationManagerCompat.from(this);
 
         IVLogout =  findViewById(R.id.IVLogout);
         IVProfile= findViewById(R.id.IVProfile);
@@ -104,7 +110,6 @@ public class ChatActivity extends AppCompatActivity {
         DatabaseReference chatMessageRef = FirebaseDatabase.getInstance().getReference();
 
 
-
         IVbtnMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,15 +123,17 @@ public class ChatActivity extends AppCompatActivity {
                     userRef.child("message").setValue(post);
                     userRef.child("senderId").setValue(UserId);
                     userRef.child("time").setValue(getCurrentTime());
+                    userRef.child("status").setValue("read");
 
                     DatabaseReference partnerRef = FirebaseDatabase.getInstance().getReference().child("Users").child(ChatPartnerUserId).child("Chat").child(UserId).child(key);
                     partnerRef.child("message").setValue(post);
                     partnerRef.child("senderId").setValue(UserId);
                     partnerRef.child("time").setValue(getCurrentTime());
+
+                    DatabaseReference partnerNotification = FirebaseDatabase.getInstance().getReference().child("Users").child(ChatPartnerUserId).child("Chat").child(UserId).child("notification");
+                    partnerNotification.setValue("unread");
                     ETMessage.setText("");
-
                 }
-
             }
 
             });
@@ -238,7 +245,8 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public String getCurrentTime() {
+
+       public String getCurrentTime() {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);

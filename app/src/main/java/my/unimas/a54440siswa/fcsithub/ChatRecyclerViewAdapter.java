@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,9 +35,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private Context mContext ;
     private List<Chat> mData ;
 
-    FirebaseAuth mAuth;
-    FirebaseUser user;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user =mAuth.getCurrentUser();
 
+    final String UserId= user.getUid();
 
     public ChatRecyclerViewAdapter(Context mContext, List<Chat> mData) {
         this.mContext = mContext;
@@ -43,7 +47,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.chatusers,parent,false);
@@ -57,6 +60,14 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         StorageReference mediaRef =storageReference.child("profilepic/" +mData.get(position).getChatUserId()+".jpg");
         holder.TVChatUserName.setText(mData.get(position).getChatUserName());
+
+        if(mData.get(position).getNotification().equals("unread")){
+            holder.Status.setVisibility(View.VISIBLE);
+        }else if(mData.get(position).getNotification().equals("read")){
+            holder.Status.setVisibility(View.GONE);
+        }else {
+            holder.Status.setVisibility(View.GONE);
+        }
 
 
         GlideApp.with(mContext /* context */)
@@ -81,6 +92,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+                DatabaseReference partnerNotificationChange = FirebaseDatabase.getInstance().getReference().child("Users").child(UserId).child("Chat").child(mData.get(position).getChatUserId()).child("notification");
+                partnerNotificationChange.setValue("read");
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 // passing data to the book activit
                 intent.putExtra("ChatUserId", mData.get(position).getChatUserId());
@@ -102,6 +115,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         TextView TVChatUserName;
         CircleImageView CVChatUser;
         LinearLayout LVChatUsers;
+        ImageView Status;
 
 
         public MyViewHolder(View itemView) {
@@ -110,6 +124,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             TVChatUserName = itemView.findViewById(R.id.tvchatusername) ;
             CVChatUser =  itemView.findViewById(R.id.cvchatuserprofile) ;
             LVChatUsers = itemView.findViewById(R.id.lvchatusers) ;
+            Status = itemView.findViewById(R.id.status);
 
 
 

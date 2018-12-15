@@ -90,6 +90,7 @@ public class ChattingRecyclerViewAdapter extends RecyclerView.Adapter {
         return null;
     }
 
+
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -173,11 +174,6 @@ public class ChattingRecyclerViewAdapter extends RecyclerView.Adapter {
                         }
                     })
                     .into(CVSenderImage);
-
-
-
-
-
         }
     }
 }

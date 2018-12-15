@@ -132,20 +132,26 @@ public class ChatListActivity extends AppCompatActivity {
 
                 String chatuserid[] = new String[30];
                 String chatusername[] = new String[30];
-
+                String notification[] = new String[30];
 
                 lstChat.clear();
                 lstUsers.clear();
                 if (dataSnapshot.exists()) {
                     RVChat.setVisibility(View.VISIBLE);
                     int i = 1;
+                    int j =1;
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Users").child(UserId).child("Chat").getChildren()) {
                         chatuserid[i]= dataSnapshot1.getKey();
                         chatusername[i]= dataSnapshot.child("Users").child(UserId).child("Chat").child(chatuserid[i]).child("ChatPartnerName").getValue(String.class);
-                        lstChat.add(new Chat(chatuserid[i],chatusername[i]));
+                        notification[i]= dataSnapshot.child("Users").child(UserId).child("Chat").child(chatuserid[i]).child("notification").getValue(String.class);
+                        if(notification[i]==null){
+                            lstChat.add(new Chat(chatuserid[i],chatusername[i],"read"));
+                        }else{
+                            lstChat.add(new Chat(chatuserid[i],chatusername[i],notification[i]));
+                        }
+
                         i++;
                     }
-
                 }else{
                     RVChat.setVisibility(View.GONE);
                 }

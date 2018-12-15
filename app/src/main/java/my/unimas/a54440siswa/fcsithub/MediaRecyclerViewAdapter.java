@@ -55,8 +55,6 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
 
 
 
-
-
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         StorageReference mediaRef =storageReference.child("Media/" +mData.get(position).getMediaID());
