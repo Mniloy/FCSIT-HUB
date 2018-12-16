@@ -256,7 +256,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-        IVProfile.setOnClickListener(new View.OnClickListener() {
+        CVProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent userprofile = new Intent (ChatActivity.this, Userprofile.class);
