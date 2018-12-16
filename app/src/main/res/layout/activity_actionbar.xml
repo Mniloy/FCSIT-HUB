@@ -47,13 +47,11 @@
                 android:layout_height="25dp"
                 android:src="@drawable/logout" />
 
-            <ImageView
-                android:id="@+id/IVProfile"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/CVProfile"
                 android:layout_margin="10dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/profile"
-                />
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
 
 
         </LinearLayout>

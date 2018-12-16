@@ -1,8 +1,10 @@
 package my.unimas.a54440siswa.fcsithub;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,17 +25,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ChatListActivity extends AppCompatActivity {
 
     String UserId;
-    ImageView IVLogout, IVProfile, IVSearch ;
+    ImageView IVLogout, IVSearch ;
     ImageView IVback;
     TextView UserName;
     Toolbar toolbar;
+    CircleImageView CVProfileImage;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -65,11 +76,9 @@ public class ChatListActivity extends AppCompatActivity {
 
         IVback =  findViewById(R.id.IVback);
         IVLogout =  findViewById(R.id.IVLogout);
-        IVLogout.setVisibility(View.INVISIBLE);
-        IVProfile =  findViewById(R.id.IVProfile);
-        IVProfile.setVisibility(View.INVISIBLE);
         IVSearch =  findViewById(R.id.IVsearch);
         IVSearch.setVisibility(View.INVISIBLE);
+        CVProfileImage = findViewById(R.id.CVProfile);
 
         UserName= findViewById(R.id.username);
 
@@ -104,10 +113,20 @@ public class ChatListActivity extends AppCompatActivity {
             }
         };
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    startActivity(new Intent(ChatListActivity.this, SignIn.class));
+                }
+            }
+        };
+
         IVLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
+
             }
         });
 
@@ -115,11 +134,28 @@ public class ChatListActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
-
-
         /*----------------------------------------------------------------------------------------*/
 
-        /*-------------------------------- Course List Fetch -------------------------------------*/
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference mediaRef =storageReference.child("profilepic/" +UserId+".jpg");
+        /*----------------------------------------------------------------------------------------*/
+
+
+        GlideApp.with(this /* context */)
+                .load(mediaRef)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.GONE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(CVProfileImage);
 
 
         lstChat = new ArrayList<>();

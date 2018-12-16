@@ -1,17 +1,23 @@
 package my.unimas.a54440siswa.fcsithub;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,9 +25,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MediaList extends AppCompatActivity {
 
@@ -32,6 +42,7 @@ public class MediaList extends AppCompatActivity {
     TextView PostTime;
     TextView PostDate;
     Toolbar toolbar;
+    CircleImageView CVProfileImage;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -66,8 +77,7 @@ public class MediaList extends AppCompatActivity {
         IVback =  findViewById(R.id.IVback);
         IVLogout =  findViewById(R.id.IVLogout);
         IVLogout.setVisibility(View.INVISIBLE);
-        IVProfile =  findViewById(R.id.IVProfile);
-        IVProfile.setVisibility(View.INVISIBLE);
+        CVProfileImage = findViewById(R.id.CVProfile);
         IVSearch =  findViewById(R.id.IVsearch);
         IVSearch.setVisibility(View.INVISIBLE);
 
@@ -94,11 +104,11 @@ public class MediaList extends AppCompatActivity {
         });
 
 
-       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    startActivity(new Intent(AnnouncementList.this, SignIn.class));
+                    startActivity(new Intent(MediaList.this, SignIn.class));
                 }
             }
         };
@@ -108,22 +118,37 @@ public class MediaList extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
             }
-        }); */
+        });
 
         /* ------------------------------ Firebase Elements --------------------------------------*/
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
-        DatabaseReference mediaRef = FirebaseDatabase.getInstance().getReference();
-
-
+        DatabaseReference mediaRefer = FirebaseDatabase.getInstance().getReference();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference mediaRef =storageReference.child("profilepic/" +UserId+".jpg");
         /*----------------------------------------------------------------------------------------*/
 
-        /*-------------------------------- Course List Fetch -------------------------------------*/
+
+        GlideApp.with(this /* context */)
+                .load(mediaRef)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.GONE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(CVProfileImage);
 
 
         lstMedia = new ArrayList<>();
 
-        mediaRef.addValueEventListener(new ValueEventListener() {
+        mediaRefer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);

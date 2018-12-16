@@ -38,6 +38,7 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
     FirebaseAuth mAuth;
     FirebaseUser user;
     String UserId;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     public UsersRecyclerViewAdapter(Context mContext, List<Users> mData) {
         this.mContext = mContext;
@@ -52,7 +53,6 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
         return new MyViewHolder(view);
     }
 
-    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {

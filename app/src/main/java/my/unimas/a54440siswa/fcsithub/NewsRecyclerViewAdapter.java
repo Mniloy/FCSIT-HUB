@@ -66,13 +66,15 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             }
         });
 
-
-
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+    public void filterList(List<News> filteredList) {
+        mData = filteredList;
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -89,7 +91,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             TVPostDate = (TextView) itemView.findViewById(R.id.TVNPostDate) ;
             IVDelete = itemView.findViewById(R.id.IVDelete);
             TVNError = itemView.findViewById(R.id.TVNError);
-
 
 
         }

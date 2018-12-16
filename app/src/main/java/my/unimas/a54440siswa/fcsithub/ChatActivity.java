@@ -45,6 +45,8 @@ public class ChatActivity extends AppCompatActivity {
     ImageView IVLogout, IVBack, IVProfile, IVAttachment, IVbtnMessage;
     EditText ETMessage;
 
+    CircleImageView CVProfileImage;
+
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -78,25 +80,43 @@ public class ChatActivity extends AppCompatActivity {
         notificationManager = NotificationManagerCompat.from(this);
 
         IVLogout =  findViewById(R.id.IVLogout);
-        IVProfile= findViewById(R.id.IVProfile);
+        CVProfileImage = findViewById(R.id.CVProfile);
         IVBack =findViewById(R.id.IVback);
+
 
         /*------------------------- Receive data From Previous Intent ----------------------------*/
         Intent intent = getIntent();
-
         ChatPartnerUserId = intent.getExtras().getString("ChatUserId");
         ChatPartnerUserName = intent.getExtras().getString("ChatUserName");
 
         /*----------------------------------------------------------------------------------------*/
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-
         user = mAuth.getCurrentUser();
         final String UserId= user.getUid();
         final String UserName =user.getDisplayName();
         final TextView TVUserName =findViewById(R.id.username);
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference mediaRef2 =storageReference.child("profilepic/" +UserId+".jpg");
+        /*----------------------------------------------------------------------------------------*/
+
+
+        GlideApp.with(this /* context */)
+                .load(mediaRef2)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.GONE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(CVProfileImage);
 
         final CircleImageView CVChatUser = findViewById(R.id.cvchatuser);
         final TextView TVChatUserName = findViewById(R.id.tvchatusername);

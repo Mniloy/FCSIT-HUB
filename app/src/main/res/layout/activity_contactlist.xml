@@ -6,7 +6,15 @@
         android:background="@color/offwhitebackground"
         android:backgroundTintMode="multiply">
 
-   <include layout="@layout/activity_actionbar" /> -->
+   <include layout="@layout/activity_actionbar" />
+
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        android:hint="Enter User's name to search "/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_id"
