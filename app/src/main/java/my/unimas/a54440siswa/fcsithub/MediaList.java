@@ -189,7 +189,7 @@ public class MediaList extends AppCompatActivity {
         });
 
         mediaAdapter = new MediaRecyclerViewAdapter(this,lstMedia);
-        RVMedia.setLayoutManager(new LinearLayoutManager(this));
+        RVMedia.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true));
         RVMedia.setAdapter(mediaAdapter);
 
 

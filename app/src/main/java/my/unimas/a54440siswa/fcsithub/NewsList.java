@@ -221,7 +221,7 @@ public class NewsList extends AppCompatActivity {
         });
 
         newsAdapter = new NewsRecyclerViewAdapter(this,lstNews);
-        RVNews.setLayoutManager(new LinearLayoutManager(this));
+        RVNews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true));
         RVNews.setAdapter(newsAdapter);
     }
 

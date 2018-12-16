@@ -187,7 +187,7 @@ public class AnnouncementList extends AppCompatActivity {
         });
 
         announcementAdapter = new AnnouncementRecyclerViewAdapter(this,lstAnnouncement);
-        RVAnnouncement.setLayoutManager(new LinearLayoutManager(this));
+        RVAnnouncement.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true));
         RVAnnouncement.setAdapter(announcementAdapter);
 
 
