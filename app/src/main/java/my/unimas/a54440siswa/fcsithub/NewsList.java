@@ -111,6 +111,8 @@ public class NewsList extends AppCompatActivity {
         IVback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ETSearch.clearFocus();
+                ETSearch.setVisibility(View.GONE);
                 finish();
                 Intent homeactivity = new Intent (NewsList.this, HomeActivity.class);
                 startActivity(homeactivity);
