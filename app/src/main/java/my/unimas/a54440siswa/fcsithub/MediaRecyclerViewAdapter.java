@@ -102,10 +102,17 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return mData.size();
     }
+    public void filterList(List<Media> filteredList) {
+        mData = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 

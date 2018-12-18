@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     EditText ETpost;
     RadioButton Rnews, Rannouncement, Rmedia;
     ProgressBar mProgressBar;
+    String userName;
 
     private Uri mImageUri;
 
@@ -156,6 +157,20 @@ public class HomeActivity extends AppCompatActivity {
                 .into(CVProfileImage);
 
 
+        rootRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
+                UserName.setText(userName);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Hello", "Failed to read value.", error.toException());
+            }
+        });
 
         BTNPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +186,7 @@ public class HomeActivity extends AppCompatActivity {
                             String post = ETpost.getText().toString().trim();
                             DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("News").push();
                             postRef.child("PostUserId").setValue(UserId);
-                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("PostUserName").setValue(userName);
                             postRef.child("Post").setValue(post);
                             postRef.child("PostTime").setValue(getCurrentTime());
                             postRef.child("PostDate").setValue(getCurrentDate());
@@ -184,7 +199,7 @@ public class HomeActivity extends AppCompatActivity {
                             String post = ETpost.getText().toString().trim();
                             DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Announcement").push();
                             postRef.child("PostUserId").setValue(UserId);
-                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("PostUserName").setValue(userName);
                             postRef.child("Post").setValue(post);
                             postRef.child("PostTime").setValue(getCurrentTime());
                             postRef.child("PostDate").setValue(getCurrentDate());
@@ -208,20 +223,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        rootRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
-                UserName.setText(userName);
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Hello", "Failed to read value.", error.toException());
-            }
-        });
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -385,7 +387,7 @@ public class HomeActivity extends AppCompatActivity {
 
                             String post = ETpost.getText().toString().trim();
                             postRef.child("PostUserId").setValue(UserId);
-                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("PostUserName").setValue(userName);
                             postRef.child("Post").setValue(post);
                             postRef.child("PostTime").setValue(getCurrentTime());
                             postRef.child("PostDate").setValue(getCurrentDate());

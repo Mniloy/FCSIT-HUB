@@ -41,7 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewsList extends AppCompatActivity {
 
     String UserId;
-    ImageView IVLogout, IVSearch, IVProfile;
+    ImageView IVLogout, IVSearch;
     ImageView IVback;
     TextView UserName;
     EditText ETSearch;

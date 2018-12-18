@@ -9,8 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,19 +41,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MediaList extends AppCompatActivity {
 
     String UserId;
-    ImageView IVLogout, IVProfile, IVSearch ;
+    ImageView IVLogout,IVSearch ;
     ImageView IVback;
     TextView UserName;
-    TextView PostTime;
-    TextView PostDate;
+    EditText ETSearch;
     Toolbar toolbar;
     CircleImageView CVProfileImage;
+    Animation RightToLeft;
+    RecyclerView RVMedia;
+    DatabaseReference mediaRefer;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseUser user;
     MediaRecyclerViewAdapter mediaAdapter;
     List<Media> lstMedia ;
+    DatabaseReference mediaRef;
 
 
     @Override
@@ -73,18 +81,25 @@ public class MediaList extends AppCompatActivity {
         toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        RightToLeft = AnimationUtils.loadAnimation(this,R.anim.rightleft);
+        ETSearch = findViewById(R.id.mediaedittext);
         IVback =  findViewById(R.id.IVback);
         IVLogout =  findViewById(R.id.IVLogout);
-        IVLogout.setVisibility(View.INVISIBLE);
         CVProfileImage = findViewById(R.id.CVProfile);
         IVSearch =  findViewById(R.id.IVsearch);
-        IVSearch.setVisibility(View.INVISIBLE);
-
         UserName= findViewById(R.id.username);
 
 
-        final RecyclerView RVMedia = findViewById(R.id.recyclerview_media);
+        IVSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ETSearch.setAnimation(RightToLeft);
+                ETSearch.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        RVMedia = findViewById(R.id.recyclerview_media);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -98,8 +113,12 @@ public class MediaList extends AppCompatActivity {
         IVback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ETSearch.clearFocus();
+                ETSearch.setVisibility(View.GONE);
+                finish();
                 Intent homeactivity = new Intent (MediaList.this, HomeActivity.class);
                 startActivity(homeactivity);
+
             }
         });
 
@@ -123,7 +142,7 @@ public class MediaList extends AppCompatActivity {
         /* ------------------------------ Firebase Elements --------------------------------------*/
         user = mAuth.getCurrentUser();
         UserId= user.getUid();
-        DatabaseReference mediaRefer = FirebaseDatabase.getInstance().getReference();
+        mediaRefer = FirebaseDatabase.getInstance().getReference();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference mediaRef =storageReference.child("profilepic/" +UserId+".jpg");
         /*----------------------------------------------------------------------------------------*/
@@ -144,6 +163,23 @@ public class MediaList extends AppCompatActivity {
                     }
                 })
                 .into(CVProfileImage);
+
+        ETSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
 
 
         lstMedia = new ArrayList<>();
@@ -192,9 +228,51 @@ public class MediaList extends AppCompatActivity {
         RVMedia.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true));
         RVMedia.setAdapter(mediaAdapter);
 
-
     }
 
+    public void filter(final String text ) {
+        final List <Media> newlstMedia = new ArrayList<>();
+        mediaRefer.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
+                UserName.setText(userName);
+                String mediaid[] = new String[20];
+                String postusername[] = new String[20];
+                String post[] = new String[20];
+                String posttime[] = new String[20];
+                String postdate[] = new String[20];
+                String userid[] = new String[30];
+
+                newlstMedia.clear();
+                if (dataSnapshot.exists()) {
+                    int i = 1;
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Media").getChildren()) {
+                        mediaid[i]= dataSnapshot1.getKey();
+                        postusername[i]=dataSnapshot.child("Media").child(mediaid[i]).child("PostUserName").getValue(String.class);
+                        post[i]=dataSnapshot.child("Media").child(mediaid[i]).child("Post").getValue(String.class);
+                        posttime[i]=dataSnapshot.child("Media").child(mediaid[i]).child("PostTime").getValue(String.class);
+                        postdate[i]=dataSnapshot.child("Media").child(mediaid[i]).child("PostDate").getValue(String.class);
+                        userid[i]=dataSnapshot.child("Media").child(mediaid[i]).child("PostUserId").getValue(String.class);
+
+                        if (postusername[i].toLowerCase().contains(text.toLowerCase())) {
+                            newlstMedia.add(new Media(post[i],postusername[i],posttime[i],postdate[i], mediaid[i], userid[i]));
+                        }
+                        i++;
+                    }
+                }else{
+                    RVMedia.setVisibility(View.GONE);
+                }
+                mediaAdapter.filterList(newlstMedia);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Hello", "Failed to read value.", error.toException());
+            }
+        });
+    }
 
 
 

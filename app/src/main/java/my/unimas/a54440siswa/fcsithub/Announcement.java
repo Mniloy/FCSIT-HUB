@@ -46,7 +46,7 @@ public class Announcement {
         return UserID;
     }
 
-    public void setName(String post) { Post = post; }
+    public void setPost(String post) { Post = post; }
 
     public void setPostUserName(String postusername) {
         PostUserName = postusername;
