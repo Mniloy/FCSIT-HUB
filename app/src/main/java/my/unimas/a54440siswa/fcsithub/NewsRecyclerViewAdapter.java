@@ -83,10 +83,10 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            TVPost = (TextView) itemView.findViewById(R.id.TVNPost) ;
-            TVUserName = (TextView) itemView.findViewById(R.id.TVNUserName) ;
-            TVPostTime = (TextView) itemView.findViewById(R.id.TVNPostTime) ;
-            TVPostDate = (TextView) itemView.findViewById(R.id.TVNPostDate) ;
+            TVPost =  itemView.findViewById(R.id.TVNPost) ;
+            TVUserName =  itemView.findViewById(R.id.TVNUserName) ;
+            TVPostTime =  itemView.findViewById(R.id.TVNPostTime) ;
+            TVPostDate =  itemView.findViewById(R.id.TVNPostDate) ;
             IVDelete = itemView.findViewById(R.id.IVDelete);
             TVNError = itemView.findViewById(R.id.TVNError);
 

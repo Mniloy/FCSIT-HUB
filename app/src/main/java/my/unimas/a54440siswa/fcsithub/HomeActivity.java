@@ -135,46 +135,46 @@ public class HomeActivity extends AppCompatActivity {
                 } else if (ETpost.getText().toString().length() >= 300) {
                     ETpost.setError("Note should be less than 300 characters");
                 } else
+                {
+                    if (Rnews.isChecked()){
+
+                        String post = ETpost.getText().toString().trim();
+                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("News").push();
+                        postRef.child("PostUserId").setValue(UserId);
+                        postRef.child("PostUserName").setValue(postusername);
+                        postRef.child("Post").setValue(post);
+                        postRef.child("PostTime").setValue(getCurrentTime());
+                        postRef.child("PostDate").setValue(getCurrentDate());
+                        Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                        ETpost.setText("");
+
+
+                    } else if (Rannouncement.isChecked()) {
+
+                        String post = ETpost.getText().toString().trim();
+                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Announcement").push();
+                        postRef.child("PostUserId").setValue(UserId);
+                        postRef.child("PostUserName").setValue(postusername);
+                        postRef.child("Post").setValue(post);
+                        postRef.child("PostTime").setValue(getCurrentTime());
+                        postRef.child("PostDate").setValue(getCurrentDate());
+                        Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                        ETpost.setText("");
+                    } else if (Rmedia.isChecked()) {
+                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Media").push();
+                        String postid= postRef.getKey();
+                        uploadFile(postRef, postid);
+                    }else
                     {
-                        if (Rnews.isChecked()) {
-
-                            String post = ETpost.getText().toString().trim();
-                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("News").push();
-                            postRef.child("PostUserId").setValue(UserId);
-                            postRef.child("PostUserName").setValue(postusername);
-                            postRef.child("Post").setValue(post);
-                            postRef.child("PostTime").setValue(getCurrentTime());
-                            postRef.child("PostDate").setValue(getCurrentDate());
-                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
-                            ETpost.setText("");
-
-
-                        } else if (Rannouncement.isChecked()) {
-
-                            String post = ETpost.getText().toString().trim();
-                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Announcement").push();
-                            postRef.child("PostUserId").setValue(UserId);
-                            postRef.child("PostUserName").setValue(postusername);
-                            postRef.child("Post").setValue(post);
-                            postRef.child("PostTime").setValue(getCurrentTime());
-                            postRef.child("PostDate").setValue(getCurrentDate());
-                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
-                            ETpost.setText("");
-                        } else if (Rmedia.isChecked()) {
-                             DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Media").push();
-                             String postid= postRef.getKey();
-                             uploadFile(postRef, postid);
-                             }else
-                            {
-                                Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
-                                ETpost.setText("");
-
-                            }
-
+                        Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
+                        ETpost.setText("");
 
                     }
+
+
                 }
-            });
+            }
+        });
 
 
 
@@ -273,7 +273,7 @@ public class HomeActivity extends AppCompatActivity {
         IVAttachment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            openFileChooser();
+                openFileChooser();
             }
         });
         CVAnnouncement.setOnClickListener(new View.OnClickListener() {
@@ -287,8 +287,8 @@ public class HomeActivity extends AppCompatActivity {
         CVMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           //     Intent message = new Intent(HomeActivity.this, AttachmentActivity.class);
-           //     startActivity(message);
+                //     Intent message = new Intent(HomeActivity.this, AttachmentActivity.class);
+                //     startActivity(message);
             }
         });
 
@@ -325,7 +325,7 @@ public class HomeActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
 
-           // Picasso.with(this).load(mImageUri).into(mImageView);
+            // Picasso.with(this).load(mImageUri).into(mImageView);
         }
     }
 
