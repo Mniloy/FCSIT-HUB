@@ -37,8 +37,6 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
 
 
 
-
-
     public MediaRecyclerViewAdapter(Context mContext, List<Media> mData) {
         this.mContext = mContext;
         this.mData = mData;
@@ -54,8 +52,6 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
     }
 
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
-
 
 
 
@@ -106,10 +102,17 @@ public class MediaRecyclerViewAdapter extends RecyclerView.Adapter<MediaRecycler
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return mData.size();
     }
+    public void filterList(List<Media> filteredList) {
+        mData = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 

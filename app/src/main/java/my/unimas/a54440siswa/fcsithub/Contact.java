@@ -2,6 +2,7 @@
 package my.unimas.a54440siswa.fcsithub;
 public class Contact {
 
+    private String UserId;
     private String Name;
     private String Email ;
     private String Number ;
@@ -9,12 +10,16 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String name, String email, String number) {
+    public Contact(String userId, String name, String email, String number) {
+        UserId = userId;
         Name = name;
         Email = email;
         Number = number;
     }
 
+    public String getUserId() {
+        return UserId;
+    }
 
     public String getName() {
         return Name;
@@ -26,6 +31,11 @@ public class Contact {
 
     public String getNumber() {
         return Number;
+    }
+
+
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 
     public void setName(String name) {

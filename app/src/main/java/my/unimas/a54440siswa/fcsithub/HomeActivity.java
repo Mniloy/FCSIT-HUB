@@ -2,10 +2,12 @@ package my.unimas.a54440siswa.fcsithub;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -21,6 +23,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,22 +46,24 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class HomeActivity extends AppCompatActivity {
 
     CardView CVFacilities, CVDirectory, CVContact, CVEleap, CVMessage, CVNews, CVAnnouncement, CVMedia;
     Button BTNPost;
-    ImageButton IVDelete, IBEleap;
-
-    ImageView IVLogout, IVBack, IVProfile, IVSearch, IVAttachment;
+    ImageButton IVDelete;
+    CircleImageView CVProfileImage;
+    ImageView IVLogout, IVBack, IVSearch, IVAttachment;
     String UserId;
     String postusername;
-    String password;
     TextView UserName, TVAttachmentName;
     LinearLayout layout;
     EditText ETpost;
     RadioButton Rnews, Rannouncement, Rmedia;
     ProgressBar mProgressBar;
+    String userName;
 
     private Uri mImageUri;
 
@@ -107,6 +115,8 @@ public class HomeActivity extends AppCompatActivity {
         mProgressBar =findViewById(R.id.pmupb);
         TVAttachmentName =findViewById(R.id.TVAttachmentName);
 
+        CVProfileImage = findViewById(R.id.CVProfile);
+
         IVLogout =  findViewById(R.id.IVLogout);
         ETpost= findViewById(R.id.ETpost);
         BTNPost = findViewById(R.id.BTNpost);
@@ -116,7 +126,6 @@ public class HomeActivity extends AppCompatActivity {
         Rannouncement = findViewById(R.id.radio_announcement);
         Rmedia = findViewById(R.id.radio_media);
         IVDelete=findViewById(R.id.IVDelete);
-        IVProfile= findViewById(R.id.IVProfile);
 
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -126,6 +135,42 @@ public class HomeActivity extends AppCompatActivity {
         postusername =user.getDisplayName();
         UserName =findViewById(R.id.username);
 
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference mediaRef =storageReference.child("profilepic/" +UserId+".jpg");
+        /*----------------------------------------------------------------------------------------*/
+
+
+        GlideApp.with(this /* context */)
+                .load(mediaRef)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.GONE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(CVProfileImage);
+
+
+        rootRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
+                UserName.setText(userName);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Hello", "Failed to read value.", error.toException());
+            }
+        });
 
         BTNPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +214,42 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
                         ETpost.setText("");
 
+<<<<<<< HEAD
                     }
+=======
+                            String post = ETpost.getText().toString().trim();
+                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("News").push();
+                            postRef.child("PostUserId").setValue(UserId);
+                            postRef.child("PostUserName").setValue(userName);
+                            postRef.child("Post").setValue(post);
+                            postRef.child("PostTime").setValue(getCurrentTime());
+                            postRef.child("PostDate").setValue(getCurrentDate());
+                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                            ETpost.setText("");
+
+
+                        } else if (Rannouncement.isChecked()) {
+
+                            String post = ETpost.getText().toString().trim();
+                            DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Announcement").push();
+                            postRef.child("PostUserId").setValue(UserId);
+                            postRef.child("PostUserName").setValue(userName);
+                            postRef.child("Post").setValue(post);
+                            postRef.child("PostTime").setValue(getCurrentTime());
+                            postRef.child("PostDate").setValue(getCurrentDate());
+                            Toast.makeText(HomeActivity.this, "Post Saved", Toast.LENGTH_LONG).show();
+                            ETpost.setText("");
+                        } else if (Rmedia.isChecked()) {
+                             DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Media").push();
+                             String postid= postRef.getKey();
+                             uploadFile(postRef, postid);
+                             }else
+                            {
+                                Toast.makeText(HomeActivity.this, "Select the Category of your Post", Toast.LENGTH_LONG).show();
+                                ETpost.setText("");
+
+                            }
+>>>>>>> 1580b70216ad8be91b70f2d9d0441c8ff2693c6f
 
 
                 }
@@ -178,20 +258,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        rootRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String userName = dataSnapshot.child("Users").child(UserId).child("userName").getValue(String.class);
-                UserName.setText(userName);
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Hello", "Failed to read value.", error.toException());
-            }
-        });
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -219,7 +286,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        IVProfile.setOnClickListener(new View.OnClickListener() {
+        CVProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent userprofile = new Intent (HomeActivity.this, Userprofile.class);
@@ -287,8 +354,13 @@ public class HomeActivity extends AppCompatActivity {
         CVMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 //     Intent message = new Intent(HomeActivity.this, AttachmentActivity.class);
                 //     startActivity(message);
+=======
+                Intent message = new Intent(HomeActivity.this, ChatListActivity.class);
+                startActivity(message);
+>>>>>>> 1580b70216ad8be91b70f2d9d0441c8ff2693c6f
             }
         });
 
@@ -355,7 +427,7 @@ public class HomeActivity extends AppCompatActivity {
 
                             String post = ETpost.getText().toString().trim();
                             postRef.child("PostUserId").setValue(UserId);
-                            postRef.child("PostUserName").setValue(postusername);
+                            postRef.child("PostUserName").setValue(userName);
                             postRef.child("Post").setValue(post);
                             postRef.child("PostTime").setValue(getCurrentTime());
                             postRef.child("PostDate").setValue(getCurrentDate());

@@ -12,12 +12,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="left"
+        android:gravity="center"
         android:background="@drawable/greengradient"
         android:backgroundTintMode="multiply">
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
@@ -31,16 +31,12 @@
 
             <ImageView
                 android:id="@+id/IVmediaitem"
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_margin="10dp"
                 android:elevation="-10dp"/>
 
-
-
         </FrameLayout>
-
-
-
 
 
         <LinearLayout
@@ -65,35 +61,68 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/TVMUserName"
-            android:textColor="#ffffff"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"/>
 
-        <TextView
-            android:id="@+id/TVMPost"
-            android:textColor="#2d2d2d"
-            android:textSize="13sp"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/TVMUserName"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"/>
+
+            <TextView
+                android:id="@+id/TVMPost"
+                android:textColor="#2d2d2d"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post"/>
-        <TextView
-            android:id="@+id/TVMPostTime"
-            android:textColor="#2d2d2d"
-            android:textSize="8sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time"/>
-        <TextView
-            android:id="@+id/TVMPostDate"
-            android:textColor="#2d2d2d"
-            android:textSize="8sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:textColor="#caffd8"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post Time: "/>
+
+            <TextView
+                android:id="@+id/TVMPostTime"
+                android:textColor="#2d2d2d"
+                android:textSize="12sp"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"/>
+
+            <TextView
+                android:textColor="#caffd8"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post Time: "/>
+
+            <TextView
+                android:id="@+id/TVMPostDate"
+                android:textColor="#2d2d2d"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

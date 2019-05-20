@@ -2,9 +2,11 @@ package my.unimas.a54440siswa.fcsithub;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +36,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Userprofile extends AppCompatActivity {
 
     String UserId;
@@ -41,7 +49,7 @@ public class Userprofile extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 71;
     TextView UserName, UserPName, UserEmail, UserNumber, UserDesignation, UserProgram;
     Toolbar toolbar;
-
+    CircleImageView CVProfileImage;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -88,10 +96,9 @@ public class Userprofile extends AppCompatActivity {
         UserProgram= findViewById(R.id.TVpuserprogram);
         BTNChoose= findViewById(R.id.BTNChoose);
         BTNUpload=findViewById(R.id.BTNUpload);
+        CVProfileImage = findViewById(R.id.CVProfile);
 
         IVback.setVisibility(View.INVISIBLE);
-        IVProfile=findViewById(R.id.IVProfile);
-        IVProfile.setVisibility(View.INVISIBLE);
         IVSearch=findViewById(R.id.IVsearch);
         IVSearch.setVisibility(View.INVISIBLE);
 
@@ -102,6 +109,22 @@ public class Userprofile extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
         profileImageReference =storageReference.child("profilepic/" +userId+".jpg");
+
+        GlideApp.with(this /* context */)
+                .load(profileImageReference)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.GONE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        CVProfileImage.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(CVProfileImage);
 
 
         GlideApp.with(this /* context */)

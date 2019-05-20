@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -73,6 +72,12 @@ public class AnnouncementRecyclerViewAdapter extends RecyclerView.Adapter<Announ
     public int getItemCount() {
         return mData.size();
     }
+
+    public void filterList(List<Announcement> filteredList) {
+        mData = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 

@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "660191362383-afuft5su9c1rak6sndv84tr5sm5ulqap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "my.unimas.a54440siswa.fcsithub",
+            "certificate_hash": "c5b4e2b05cd52ef4622c818f12c43b1a6ab18cc7"
+          }
+        },
+        {
           "client_id": "660191362383-ku0gd0p2d1dt4e074dns6ihgb8trbj9j.apps.googleusercontent.com",
           "client_type": 3
         }

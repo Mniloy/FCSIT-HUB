@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lvchatusers"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#fde2e5">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="8dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/cvchatuserprofile"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/ic_userprofile"/>
+
+                <TextView
+                    android:id="@+id/tvchatusername"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:text="User Name"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Tap to start messaging"
+                android:gravity="center"
+                android:layout_margin="30dp"
+                android:textColor="#d4b7d4"
+                android:textSize="12sp"
+                android:textStyle="italic"/>
+
+            <ImageView
+                android:id="@+id/status"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/unread"
+                android:visibility="gone"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+</LinearLayout>

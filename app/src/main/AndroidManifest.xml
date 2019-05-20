@@ -11,6 +11,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SplashScreen">
@@ -28,10 +29,12 @@
         <activity android:name=".Directory" />
         <activity android:name=".Contactlist" />
         <activity android:name=".Eleap" />
+        <activity android:name=".ChatListActivity" />
         <activity android:name=".NewsList" />
         <activity android:name=".AnnouncementList" />
         <activity android:name=".Userprofile" />
         <activity android:name=".MediaList" />
+<<<<<<< HEAD
 
 
         <service android:name=".FirebaseInstanceIDService">
@@ -48,6 +51,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+=======
+        <activity android:name=".ChatActivity" />
+
+>>>>>>> 1580b70216ad8be91b70f2d9d0441c8ff2693c6f
     </application>
 
 </manifest>

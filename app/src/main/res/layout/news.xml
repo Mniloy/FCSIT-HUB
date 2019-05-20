@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
+    cardview:cardElevation="3dp"
+    android:layout_margin="8dp"
     cardview:cardCornerRadius="4dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        android:gravity="center"
         android:background="@drawable/greengradient"
         android:backgroundTintMode="multiply">
 
@@ -38,8 +39,6 @@
 
         </LinearLayout>
 
-
-
         <TextView
             android:id="@+id/TVNUserName"
             android:textColor="#ffffff"
@@ -52,23 +51,56 @@
             android:id="@+id/TVNPost"
             android:textColor="#2d2d2d"
             android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Post"/>
-        <TextView
-            android:id="@+id/TVNPostTime"
-            android:textColor="#2d2d2d"
-            android:textSize="8sp"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Time"/>
-        <TextView
-            android:id="@+id/TVNPostDate"
-            android:textColor="#2d2d2d"
-            android:textSize="8sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:textColor="#caffd8"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post Time: "/>
+
+            <TextView
+                android:id="@+id/TVNPostTime"
+                android:textColor="#2d2d2d"
+                android:textSize="12sp"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"/>
+
+            <TextView
+                android:textColor="#caffd8"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post Date: "/>
+            <TextView
+                android:id="@+id/TVNPostDate"
+                android:textColor="#2d2d2d"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"/>
+
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
